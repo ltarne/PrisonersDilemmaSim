@@ -19,12 +19,14 @@ UserInterface::UserInterface() {
 UserInterface::~UserInterface() {
 }
 
+
 void UserInterface::display(string message) {
 	int gap = 45;
 	if (message.length() <= gap) {
-		//Print with border
+		//Calculate spacing
 		gap = (gap - message.length() + 2) / 2;
-		cout << "||" << string(gap, ' ') << message << string(gap, ' ') << "||\n";
+		//Tenary operator adds a space at the end if the message is an even length
+		cout << "||" << string(gap, ' ') << message << string(gap, ' ') << (((message.length() % 2) == 0)?" ":"") << "||\n";
 	}
 	else {
 		//Wrap text around
@@ -34,7 +36,9 @@ void UserInterface::display(string message) {
 
 }
 
+
 void UserInterface::mainMenu() {
+	cout << divider;
 	display("Main Menu");
 	display("---------");
 	for (int i = 0; i < optionNum; ++i) {
@@ -44,10 +48,3 @@ void UserInterface::mainMenu() {
 	cout << divider;
 }
 
-int UserInterface::gatherInput() {
-	int n;
-	cout << ">> ";
-	cin >> n;
-
-	return n;
-}

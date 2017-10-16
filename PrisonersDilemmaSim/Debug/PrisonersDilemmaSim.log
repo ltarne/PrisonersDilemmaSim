@@ -1,3 +1,8 @@
-﻿  main.cpp
+﻿  Interpreter.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(24): warning C4930: 'std::vector<std::string,std::allocator<_Ty>> splitLine(void)': prototyped function not called (was a variable definition intended?)
+          with
+          [
+              _Ty=std::string
+          ]
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)

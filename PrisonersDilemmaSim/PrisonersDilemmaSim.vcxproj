@@ -139,10 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Interpreter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Prisoner.cpp" />
+    <ClCompile Include="StrategyGenerator.cpp" />
+    <ClCompile Include="Tournament.cpp" />
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Interpreter.h" />
+    <ClInclude Include="Prisoner.h" />
+    <ClInclude Include="StrategyGenerator.h" />
+    <ClInclude Include="Tournament.h" />
     <ClInclude Include="UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

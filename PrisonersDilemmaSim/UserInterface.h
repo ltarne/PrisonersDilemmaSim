@@ -18,10 +18,20 @@ public:
 	~UserInterface();
 
 
-
+	/* Displays the given message in a bordered format */
 	void display(string message); 
+
+	/* Displays the main menu options */
 	void mainMenu();
-	int gatherInput();
+
+	/*  */
+	inline string gatherInput() {
+		string n;
+		cout << ">> ";
+		getline(cin, n);
+
+		return n;
+	}
 	
 
 protected:
@@ -41,17 +51,15 @@ protected:
 		"|| | | | | | |/ _ \\ '_ ` _ \\| '_ ` _ \\ / _` |    ||\n"
 		"|| | |/ /| | |  __/ | | | | | | | | | | (_| |    ||\n"
 		"|| |___/ |_|_|\\___|_| |_| |_|_| |_| |_|\\__,_|    ||\n"
-		"||                                               ||\n"
-		"***************************************************\n"
-		"***************************************************\n";
+		"||                                               ||\n";
 
 	string space = "||                                               ||\n";
 	string divider =
 		"***************************************************\n"
 		"***************************************************\n";
 
-	static const int optionNum = 2;
-	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy" };
+	static const int optionNum = 3;
+	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy", "2. Run Tournament"};
 
 	SMALL_RECT windowSize;
 	HANDLE currentConsole;
