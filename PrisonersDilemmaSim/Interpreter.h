@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
 #include <fstream>
-#include <map>
-#include <vector>
 #include <istream>
 #include <sstream>
+#include <iterator>
+#include <iostream>
+#include <ctype.h>
 
 #include "Prisoner.h"
 
@@ -16,7 +17,15 @@ public:
 	Interpreter();
 	~Interpreter();
 
-	Prisoner interpretFile(string fileName);
+	/* Generate a strategy map from a file and create a prisoner.
+	* fileName: File path of strategy file
+	*/
+	Prisoner* interpretFile(string fileName);
+
+	/* Interpret the strategy map of a prisoner.
+	* prisoner: The prisoner containing the strategy map to be interpreted
+	*/
+	void interpretStrategy(Prisoner* prisoner);
 
 protected:
 	const string KEY_WORDS[5] = { "IF", "GOTO", "BETRAY", "SILENCE", "RANDOM" };

@@ -1,10 +1,13 @@
 
 #include "StrategyGenerator.h"
 #include "Tournament.h"
+#include "Interpreter.h"
 
 int main() {
 	UserInterface* ui = new UserInterface();
 	StrategyGenerator strategyGenerator = StrategyGenerator(ui);
+	Interpreter interpreter = Interpreter();
+	Prisoner* temp;
 
 
 	int command = -1;
@@ -28,7 +31,10 @@ int main() {
 			break;
 
 		case 2:
-
+			temp = interpreter.interpretFile("testFile.txt");
+			if (temp) {
+				ui->display("Strategy file is valid!");
+			}
 			break;
 
 		default:
@@ -40,6 +46,11 @@ int main() {
 
 		
 
+	}
+
+	delete ui;
+	if (temp) {
+		delete temp;
 	}
 
 	return 0;
