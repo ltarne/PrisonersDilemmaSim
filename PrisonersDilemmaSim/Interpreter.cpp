@@ -46,6 +46,15 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 	return new Prisoner(instructions);
 }
 
-void Interpreter::interpretStrategy(Prisoner* prisoner) {
+outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
+	map<string, vector<string>> strategy = prisoner->getStrategy();
 
+	bool isFinished = false;
+	string programPosition = strategy.begin()->first;
+
+	while (!isFinished) {
+		vector<string> temp = strategy.find(programPosition)->second;
+		
+		
+	}
 }

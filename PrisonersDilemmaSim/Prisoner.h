@@ -10,7 +10,14 @@ public:
 	Prisoner(map<string, vector<string>> strategy);
 	~Prisoner();
 
-	
+	inline map<string, vector<string>> getStrategy() {
+		return strategy;
+	}
+
+	inline void setStrategy(map<string, vector<string>> strategy) {
+		this->strategy = strategy;
+	}
+
 
 protected:
 

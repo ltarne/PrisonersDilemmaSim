@@ -11,6 +11,11 @@
 
 using namespace std;
 
+enum outcome {
+	SILENCE,
+	BETRAY
+};
+
 class Interpreter
 {
 public:
@@ -25,7 +30,7 @@ public:
 	/* Interpret the strategy map of a prisoner.
 	* prisoner: The prisoner containing the strategy map to be interpreted
 	*/
-	void interpretStrategy(Prisoner* prisoner);
+	outcome interpretStrategy(Prisoner* prisoner);
 
 protected:
 	const string KEY_WORDS[5] = { "IF", "GOTO", "BETRAY", "SILENCE", "RANDOM" };
