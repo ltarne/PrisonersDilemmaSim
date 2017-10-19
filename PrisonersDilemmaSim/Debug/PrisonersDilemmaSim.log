@@ -1,11 +1,5 @@
-﻿  UserInterface.cpp
-c:\users\luke\documents\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(25): warning C4018: '<=': signed/unsigned mismatch
-  Tournament.cpp
-  StrategyGenerator.cpp
-  Prisoner.cpp
-  main.cpp
-  Interpreter.cpp
-c:\users\luke\documents\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(32): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  PrisonersDilemmaSim.vcxproj -> C:\Users\Luke\Documents\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
-  PrisonersDilemmaSim.vcxproj -> C:\Users\Luke\Documents\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)
+﻿  Interpreter.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(71): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(116): warning C4018: '<': signed/unsigned mismatch
+  PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
+  PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)

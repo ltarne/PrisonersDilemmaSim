@@ -18,7 +18,3 @@ Prisoner::Prisoner(map<string, vector<string>> strategy) {
 Prisoner::~Prisoner() {
 }
 
-outcome Prisoner::iteratePrisoner() {
-
-	return outcome();
-}

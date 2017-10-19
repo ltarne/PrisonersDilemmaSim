@@ -6,6 +6,7 @@
 #include <iterator>
 #include <iostream>
 #include <ctype.h>
+#include <set>
 
 #include "Prisoner.h"
 
@@ -32,10 +33,26 @@ public:
 	*/
 	outcome interpretStrategy(Prisoner* prisoner);
 
+	/* Is a given string an integer
+	* testString: The string to be tested
+	*/
+	bool isInteger(string testString);
+
+	/* Check that the statement given fits a valid size 
+	* splitLine: Statement line split up by spaces
+	*/
+	bool isCorrectLength(vector<string> splitLine);
+
+
+	void operationIF(const string* programPosition, vector<string> line, Prisoner* prisoner);
+	
+
+	void operationGOTO(string& programPosition, vector<string> line);
+
 protected:
 	const string KEY_WORDS[5] = { "IF", "GOTO", "BETRAY", "SILENCE", "RANDOM" };
 	const string VARIABLES[7] = { "LASTOUTCOME", "ALLOUTCOMES_W", "ALLOUTCOMES_X", "ALLOUTCOMES_Y", "ALLOUTCOMES_Z", "ITERATIONS", "MYSCORE" };
-	const char OPERATORS[5] = { '+', '-', '>', '<', '=' };
+	const string OPERATORS[5] = { "+", "-", ">", "<", "=" };
 
 
 

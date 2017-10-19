@@ -10,7 +10,7 @@ public:
 	Prisoner(map<string, vector<string>> strategy);
 	~Prisoner();
 
-	inline map<string, vector<string>> getStrategy() {
+	inline map<string, vector<string>> getStrategy() const {
 		return strategy;
 	}
 
