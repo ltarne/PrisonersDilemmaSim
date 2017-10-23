@@ -1,26 +1,26 @@
 #pragma once
-#include <string>
 #include <fstream>
 #include <istream>
 #include <sstream>
 #include <iterator>
-#include <iostream>
 #include <ctype.h>
-#include <set>
+#include <time.h>
 
 #include "Prisoner.h"
+#include "UserInterface.h"
 
 using namespace std;
 
 enum outcome {
 	SILENCE,
-	BETRAY
+	BETRAY,
+	NONE
 };
 
 class Interpreter
 {
 public:
-	Interpreter();
+	Interpreter(UserInterface* ui);
 	~Interpreter();
 
 	/* Generate a strategy map from a file and create a prisoner.
@@ -44,17 +44,17 @@ public:
 	bool isCorrectLength(vector<string> splitLine);
 
 
-	void operationIF(const string* programPosition, vector<string> line, Prisoner* prisoner);
+	void operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner);
 	
 
-	void operationGOTO(string& programPosition, vector<string> line);
+	void operationGOTO(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, const map<string, vector<string>> &strategy);
 
 protected:
 	const string KEY_WORDS[5] = { "IF", "GOTO", "BETRAY", "SILENCE", "RANDOM" };
 	const string VARIABLES[7] = { "LASTOUTCOME", "ALLOUTCOMES_W", "ALLOUTCOMES_X", "ALLOUTCOMES_Y", "ALLOUTCOMES_Z", "ITERATIONS", "MYSCORE" };
 	const string OPERATORS[5] = { "+", "-", ">", "<", "=" };
 
-
+	UserInterface* ui;
 
 };
 

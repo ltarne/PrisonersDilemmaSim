@@ -2,7 +2,8 @@
 
 
 
-Interpreter::Interpreter() {
+Interpreter::Interpreter(UserInterface* ui) {
+	this->ui = ui;
 }
 
 
@@ -29,16 +30,28 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 		
 		vector<string> splitLine((istream_iterator<string>(iss)), istream_iterator<string>());
 
+		//TODO: Check lines are in order
+		//TODO: If not ask user if they want an auto sort
 
 		//Check it is the correct length and has line numbers and a keyword
 		if (!isCorrectLength(splitLine) ||
 			!isInteger(splitLine[0]) ||
 			find(begin(KEY_WORDS), end(KEY_WORDS), splitLine[1]) == end(KEY_WORDS)) {
-			cerr << "Invalid syntax: Line does not fit base criteria!\n";
+			ui->display("Invalid syntax: Line does not fit base criteria!");
 			return NULL;
 		}
 
-
+		//Check that lines of 3 long use valid GOTO syntax
+		if (splitLine.size() == 3 &&
+			(splitLine[1] != "GOTO" ||
+			!isInteger(splitLine[2]))) {
+			ui->display("Invalid syntax: Lines does not fit GOTO criteria!");
+			return NULL;
+		}
+		//Add GOTO line number to a vector of referenced line numbers
+		else if (splitLine.size() == 3) {
+			referencedLines.push_back(splitLine[2]);
+		}
 		
 
 		//Check that lines of 7 long are in the form of a valid IF
@@ -49,15 +62,13 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 			(!VARIABLES->find(splitLine[4]) && !isInteger(splitLine[4])) ||
 			splitLine[5] != "GOTO" ||
 			!isInteger(splitLine[6]))) {
-			cerr << "Invalid syntax: Line does not fit IF criteria\n";
+			ui->display("Invalid syntax: Line does not fit IF criteria!");
 			return NULL;
 		}
 		//Add GOTO line number to a vector of referenced line numbers
 		else if(splitLine.size() == 7) {
 			referencedLines.push_back(splitLine[6]);
 		}
-
-
 
 
 		//Seperate the line number
@@ -70,7 +81,7 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 	//Check that all line numbers listed in GOTO statements are valid
 	for (int i = 0; i < referencedLines.size(); ++i) {
 		if (instructions.find(referencedLines[i]) == instructions.end()) {
-			cerr << "Invalid syntax: Line " + referencedLines[i] + " doesn't exist!\n";
+			ui->display("Invalid syntax: Line " + referencedLines[i] + " doesn't exist!");
 			return NULL;
 		}
 	}
@@ -80,13 +91,15 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 }
 
 outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
-	map<string, vector<string>> strategy = prisoner->getStrategy();
+	const map<string, vector<string>> &strategy = prisoner->getStrategy();
 
-	bool isFinished = false;
-	string programPosition = strategy.begin()->first;
+	map<string, vector<string>>::const_iterator mapPosition = strategy.begin();
+	vector<string> line;
+	
+	
 
-	while (!isFinished) {
-		vector<string> line = strategy.find(programPosition)->second;
+	while (mapPosition != strategy.end()) {
+		line = mapPosition->second;
 		
 		if (line[0] == "BETRAY") {
 			return BETRAY;
@@ -95,21 +108,24 @@ outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
 			return SILENCE;
 		}
 		else if (line[0] == "RANDOM") {
-
+			
+			if (rand() % 2) {
+				return BETRAY;
+			}
+			else {
+				return SILENCE;
+			}
 		}
 		else if (line[0] == "IF") {
-			operationIF(&programPosition, line, prisoner);
+			operationIF(&mapPosition, line, prisoner);
 		}
 		else if (line[0] == "GOTO") {
+			operationGOTO(&mapPosition, line, strategy);
+		}
 
-		}
-		else {
-			isFinished = true;
-		}
-		
-		
 	}
-	return BETRAY;
+
+	return NONE;
 }
 
 bool Interpreter::isInteger(string testString) {
@@ -134,10 +150,31 @@ bool Interpreter::isCorrectLength(vector<string> splitLine) {
 	return false;
 }
 
-void Interpreter::operationIF(const string* programPosition, vector<string> line, Prisoner* prisoner) {
+void Interpreter::operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner) {
+	//TODO: Add support for + and -
+	//TODO: Add support for X, Y, Z, W
+	unsigned int lhs = prisoner->getVariable(line[1]);
+	unsigned int rhs = prisoner->getVariable(line[3]);
+	bool result = false;
 
+	if (line[2] == ">") {
+		result = lhs > rhs;
+	}
+	else if (line[2] == "<") {
+		result = lhs < rhs;
+	}
+	else if (line[2] == "=") {
+		result = lhs == rhs;
+	}
+
+	if (result) {
+		operationGOTO(programPosition, vector<string>{line[4], line[5]}, prisoner->getStrategy());
+	}
+	else {
+		(*programPosition)++;
+	}
 }
 
-void Interpreter::operationGOTO(string& programPosition, vector<string> line) {
-
+void Interpreter::operationGOTO(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, const map<string, vector<string>> &strategy) {
+	*programPosition = strategy.find(line[1]);
 }

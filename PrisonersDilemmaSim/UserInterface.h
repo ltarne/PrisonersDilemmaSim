@@ -58,8 +58,8 @@ protected:
 		"***************************************************\n"
 		"***************************************************\n";
 
-	static const int optionNum = 3;
-	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy", "2. Run Tournament"};
+	static const int optionNum = 4;
+	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy", "2. Interpret File", "3. Execute Tournament"};
 
 	SMALL_RECT windowSize;
 	HANDLE currentConsole;

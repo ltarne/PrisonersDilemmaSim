@@ -10,13 +10,43 @@ public:
 	Prisoner(map<string, vector<string>> strategy);
 	~Prisoner();
 
-	inline map<string, vector<string>> getStrategy() const {
+	inline const map<string, vector<string>>& getStrategy() const{
 		return strategy;
 	}
 
 	inline void setStrategy(map<string, vector<string>> strategy) {
 		this->strategy = strategy;
 	}
+
+	inline void incrementALLOUTCOMES_W() {
+		ALLOUTCOMES_W++;
+	}
+
+	inline void incrementALLOUTCOMES_X() {
+		ALLOUTCOMES_X++;
+	}
+
+	inline void incrementALLOUTCOMES_Y() {
+		ALLOUTCOMES_Y++;
+	}
+
+	inline void incrementALLOUTCOMES_Z() {
+		ALLOUTCOMES_Z++;
+	}
+
+	inline void incrementITERATIONS() {
+		ITERATIONS++;
+	}
+
+	inline void incrementMYSCORE(unsigned int years) {
+		MYSCORE += years;
+	}
+
+	inline unsigned int getMYSCORE() {
+		return MYSCORE;
+	}
+
+	unsigned int getVariable(const string word);
 
 
 protected:
