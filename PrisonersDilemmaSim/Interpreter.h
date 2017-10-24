@@ -52,10 +52,6 @@ public:
 	*/
 	bool isInteger(string testString);
 
-	/* Check that the statement given fits a valid size 
-	* splitLine: Statement line split up by spaces
-	*/
-	bool isCorrectLength(vector<string> splitLine);
 
 
 	void operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner);
@@ -69,6 +65,7 @@ protected:
 	const string KEY_WORDS[5] = { "IF", "GOTO", "BETRAY", "SILENCE", "RANDOM" };
 	const string VARIABLES[7] = { "LASTOUTCOME", "ALLOUTCOMES_W", "ALLOUTCOMES_X", "ALLOUTCOMES_Y", "ALLOUTCOMES_Z", "ITERATIONS", "MYSCORE" };
 	const string OPERATORS[5] = { "+", "-", ">", "<", "=" };
+	const map<string, overallOutcome> LITERALS = { {"W", W},{"X", X},{"Y", Y}, {"Z",Z } };
 
 	UserInterface* ui;
 

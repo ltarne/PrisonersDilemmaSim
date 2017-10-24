@@ -34,41 +34,45 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 		//TODO: If not ask user if they want an auto sort
 
 		//Check it is the correct length and has line numbers and a keyword
-		if (!isCorrectLength(splitLine) ||
+		if (splitLine.size() < 2 || 
 			!isInteger(splitLine[0]) ||
 			find(begin(KEY_WORDS), end(KEY_WORDS), splitLine[1]) == end(KEY_WORDS)) {
 			ui->display("Invalid syntax: Line does not fit base criteria!");
 			return NULL;
 		}
 
-		//Check that lines of 3 long use valid GOTO syntax
-		if (splitLine.size() == 3 &&
-			(splitLine[1] != "GOTO" ||
-			!isInteger(splitLine[2]))) {
-			ui->display("Invalid syntax: Lines does not fit GOTO criteria!");
-			return NULL;
-		}
-		//Add GOTO line number to a vector of referenced line numbers
-		else if (splitLine.size() == 3) {
-			referencedLines.push_back(splitLine[2]);
+		if (splitLine[1] == "GOTO") {
+			//Check that lines of 3 long use valid GOTO syntax
+			if (splitLine.size() != 3 ||
+				!isInteger(splitLine[2])) {
+				ui->display("Invalid syntax: Lines does not fit GOTO criteria!");
+				return NULL;
+			}
+			//Add GOTO line number to a vector of referenced line numbers
+			else {
+				referencedLines.push_back(splitLine[2]);
+			}
 		}
 		
 
-		//Check that lines of 7 long are in the form of a valid IF
-		if (splitLine.size() == 7 && 
-			(splitLine[1] != "IF" ||
-			(!VARIABLES->find(splitLine[2]) && !isInteger(splitLine[2])) ||
-			!OPERATORS->find(splitLine[3]) ||
-			(!VARIABLES->find(splitLine[4]) && !isInteger(splitLine[4])) ||
-			splitLine[5] != "GOTO" ||
-			!isInteger(splitLine[6]))) {
-			ui->display("Invalid syntax: Line does not fit IF criteria!");
-			return NULL;
+		
+		if (splitLine[1] == "IF") {
+			//Check that lines of 7 long are in the form of a valid IF
+			if (splitLine.size() < 7 ||
+				(!VARIABLES->find(splitLine[2]) && !isInteger(splitLine[2])) ||
+				!OPERATORS->find(splitLine[3]) ||
+				(!VARIABLES->find(splitLine[4]) && !isInteger(splitLine[4])) ||
+				splitLine[5] != "GOTO" ||
+				!isInteger(splitLine[6])) {
+				ui->display("Invalid syntax: Line does not fit IF criteria!");
+				return NULL;
+			}
+			//Add GOTO line number to a vector of referenced line numbers
+			else {
+				referencedLines.push_back(splitLine.back());
+			}
 		}
-		//Add GOTO line number to a vector of referenced line numbers
-		else if(splitLine.size() == 7) {
-			referencedLines.push_back(splitLine[6]);
-		}
+
 
 
 		//Seperate the line number
@@ -137,18 +141,6 @@ bool Interpreter::isInteger(string testString) {
 	return true;
 }
 
-bool Interpreter::isCorrectLength(vector<string> splitLine) {
-	//Check for correct size
-	const int numLengths = 4;
-	int allowedSizes[numLengths] = { 2, 3, 5, 7 };
-
-	for (int i = 0; i < numLengths; ++i) {
-		if (splitLine.size() == allowedSizes[i]) {
-			return true;
-		}
-	}
-	return false;
-}
 
 void Interpreter::operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner) {
 	//TODO: Add support for + and -

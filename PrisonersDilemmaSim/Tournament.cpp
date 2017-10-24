@@ -2,8 +2,9 @@
 
 
 
-Tournament::Tournament(Interpreter * interpreter) {
+Tournament::Tournament(Interpreter* interpreter, UserInterface* ui) {
 	this->interpreter = interpreter;
+	this->ui = ui;
 }
 
 Tournament::Tournament(Interpreter* interpreter, string baseName, int n) {
@@ -26,13 +27,23 @@ Tournament::~Tournament() {
 
 
 
+void Tournament::gatherTournamentData(int * n, string * baseName, int * iterations) {
+	ui->display("Enter the number of files to be tested: ");
+	*n = ui->gatherInteger();
+	ui->display("Enter base name for files: ");
+	*baseName = ui->gatherString();
+
+	ui->display("Enter number of iterations: ");
+	*iterations = ui->gatherInteger();
+}
+
 void Tournament::loadPrisoners(vector<string> filePaths) {
 	for (int i = 0; i < filePaths.size(); ++i) {
 		prisoners.push_back(interpreter->interpretFile(filePaths[i]));
+		results.insert(pair<string, vector<int>>(filePaths[i], vector<int>()));
 	}
 }
 
-//TODO:Reset variables
 void Tournament::executeGame(Prisoner* x, Prisoner* y, int iterations) {
 	for (int i = 0; i < iterations; ++i) {
 		outcome resultX = interpreter->interpretStrategy(x);
@@ -72,20 +83,43 @@ void Tournament::executeGame(Prisoner* x, Prisoner* y, int iterations) {
 		y->incrementITERATIONS();
 	}
 	
+	results.find(x->getFileName())->second.push_back(x->getMYSCORE());
+	results.find(y->getFileName())->second.push_back(y->getMYSCORE());
 
-	cout << x->getFileName() <<": " << x->getMYSCORE() << y->getFileName() <<  ": " << y->getMYSCORE() << endl;
+	//cout << x->getFileName() <<": " << x->getMYSCORE() << y->getFileName() <<  ": " << y->getMYSCORE() << endl;
 	
 	x->resetVariables();
 	y->resetVariables();
 }
 
-void Tournament::executeTournament(int iterations) {
+void Tournament::compareAllPrisoners(int iterations) {
 	for (int i = 0; i < prisoners.size(); ++i) {
-		for (int j = i+1; j < prisoners.size(); ++j) {
+		for (int j = i + 1; j < prisoners.size(); ++j) {
 			executeGame(prisoners[i], prisoners[j], iterations);
 		}
 		cout << prisoners[i]->getFileName() << ": " << prisoners[i]->getFinalScore() << endl;
 	}
+}
+
+
+void Tournament::executeTournament() {
+	string baseName;
+	int n = 0;
+	int iterations = 0;
+
+	gatherTournamentData(&n, &baseName, &iterations);
+
+	loadTournament(baseName, n);
+
+	compareAllPrisoners(iterations);
+
+	displayResults();
+
+	resetTournament();
+}
+
+void Tournament::displayResults() {
+
 }
 
 void Tournament::resetTournament() {

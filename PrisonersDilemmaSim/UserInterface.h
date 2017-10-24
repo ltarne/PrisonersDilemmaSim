@@ -24,32 +24,14 @@ public:
 	/* Displays the main menu options */
 	void mainMenu();
 
+
 	/*  */
-	inline string gatherString() {
-		
+	string gatherString();
 
-		string n;
-		cout << ">> ";
-		getline(cin, n);
-
-		cin.clear();
-		cin.ignore(10000, '\n');
-		return n;
-	}
-
-	inline int gatherInteger() {
-		int n;
-		cout << ">> ";
-		cin >> n;
-		if (cin.fail()) {
-			cin.clear();
-			cin.ignore(10000, '\n');
-			return -1;
-		}
-		cin.clear();
-		cin.ignore(10000, '\n');
-		return n;
-	}
+	/* Collects an integer entered by the user
+	* Returns -1 if the user does not enter an integer
+	*/
+	int gatherInteger();
 	
 
 protected:
@@ -76,8 +58,8 @@ protected:
 		"***************************************************\n"
 		"***************************************************\n";
 
-	static const int optionNum = 6;
-	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy", "2. Interpret File", "3. Compare two prisoners", "4. Execute tournament", "5. Generate a strategy"};
+	static const int optionNum = 4;
+	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy", "2. Generate Strategies", "3. Execute Tournament"};
 
 	SMALL_RECT windowSize;
 	HANDLE currentConsole;

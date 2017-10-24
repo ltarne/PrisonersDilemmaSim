@@ -48,3 +48,27 @@ void UserInterface::mainMenu() {
 	cout << divider;
 }
 
+string UserInterface::gatherString() {
+
+
+	string n;
+	cout << ">> ";
+	cin.ignore(10000, '\n');
+	getline(cin, n);
+
+	cin.clear();
+	return n;
+}
+
+int UserInterface::gatherInteger() {
+	int n;
+	cout << ">> ";
+	cin >> n;
+	if (cin.fail()) {
+		cin.clear();
+		return -1;
+	}
+	cin.clear();
+
+	return n;
+}

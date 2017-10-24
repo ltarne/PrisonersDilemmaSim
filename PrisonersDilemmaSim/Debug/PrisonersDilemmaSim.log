@@ -1,4 +1,4 @@
-﻿  StrategyGenerator.cpp
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\strategygenerator.cpp(45): warning C4018: '<': signed/unsigned mismatch
-  PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
-  PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)
+﻿  UserInterface.cpp
+c:\users\luke\documents\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(25): warning C4018: '<=': signed/unsigned mismatch
+  PrisonersDilemmaSim.vcxproj -> C:\Users\Luke\Documents\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
+  PrisonersDilemmaSim.vcxproj -> C:\Users\Luke\Documents\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)
