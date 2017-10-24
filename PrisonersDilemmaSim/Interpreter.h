@@ -11,10 +11,12 @@
 
 using namespace std;
 
+/* Outcome of one strategy run */
 enum outcome {
+	NONE,
 	SILENCE,
-	BETRAY,
-	NONE
+	BETRAY
+	
 };
 
 class Interpreter
@@ -22,6 +24,18 @@ class Interpreter
 public:
 	Interpreter(UserInterface* ui);
 	~Interpreter();
+
+	inline const string* getVariables() {
+		return VARIABLES;
+	}
+
+	inline const string* getKeywords() {
+		return KEY_WORDS;
+	}
+
+	inline const string* getOperators() {
+		return OPERATORS;
+	}
 
 	/* Generate a strategy map from a file and create a prisoner.
 	* fileName: File path of strategy file
@@ -48,6 +62,8 @@ public:
 	
 
 	void operationGOTO(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, const map<string, vector<string>> &strategy);
+
+	vector<string> generateFileVector(string baseName, int n);
 
 protected:
 	const string KEY_WORDS[5] = { "IF", "GOTO", "BETRAY", "SILENCE", "RANDOM" };

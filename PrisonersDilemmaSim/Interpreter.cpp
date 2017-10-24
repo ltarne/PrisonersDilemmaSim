@@ -87,7 +87,7 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 	}
 	
 
-	return new Prisoner(instructions);
+	return new Prisoner(instructions, fileName);
 }
 
 outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
@@ -177,4 +177,12 @@ void Interpreter::operationIF(map<string, vector<string>>::const_iterator* progr
 
 void Interpreter::operationGOTO(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, const map<string, vector<string>> &strategy) {
 	*programPosition = strategy.find(line[1]);
+}
+
+vector<string> Interpreter::generateFileVector(string baseName, int n) {
+	vector<string> filePaths;
+	for (int i = 0; i < n; ++i) {
+		filePaths.push_back(baseName + to_string(i) + ".txt");
+	}
+	return filePaths;
 }

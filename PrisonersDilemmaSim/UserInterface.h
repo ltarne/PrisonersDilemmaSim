@@ -25,11 +25,29 @@ public:
 	void mainMenu();
 
 	/*  */
-	inline string gatherInput() {
+	inline string gatherString() {
+		
+
 		string n;
 		cout << ">> ";
 		getline(cin, n);
 
+		cin.clear();
+		cin.ignore(10000, '\n');
+		return n;
+	}
+
+	inline int gatherInteger() {
+		int n;
+		cout << ">> ";
+		cin >> n;
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(10000, '\n');
+			return -1;
+		}
+		cin.clear();
+		cin.ignore(10000, '\n');
 		return n;
 	}
 	
@@ -58,8 +76,8 @@ protected:
 		"***************************************************\n"
 		"***************************************************\n";
 
-	static const int optionNum = 4;
-	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy", "2. Interpret File", "3. Execute Tournament"};
+	static const int optionNum = 6;
+	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy", "2. Interpret File", "3. Compare two prisoners", "4. Execute tournament", "5. Generate a strategy"};
 
 	SMALL_RECT windowSize;
 	HANDLE currentConsole;

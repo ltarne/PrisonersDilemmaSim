@@ -4,10 +4,19 @@
 
 using namespace std;
 
+/* Outcomes of both prisoners combined */
+enum overallOutcome {
+	N,
+	W,
+	X,
+	Y,
+	Z
+};
+
 class Prisoner
 {
 public:
-	Prisoner(map<string, vector<string>> strategy);
+	Prisoner(map<string, vector<string>> strategy, string fileName);
 	~Prisoner();
 
 	inline const map<string, vector<string>>& getStrategy() const{
@@ -40,16 +49,30 @@ public:
 
 	inline void incrementMYSCORE(unsigned int years) {
 		MYSCORE += years;
+		finalScore += years;
 	}
+
 
 	inline unsigned int getMYSCORE() {
 		return MYSCORE;
 	}
 
+	inline string getFileName() {
+		return fileName;
+	}
+
+	inline unsigned int getFinalScore() {
+		return finalScore;
+	}
+
 	unsigned int getVariable(const string word);
+
+	void resetVariables();
 
 
 protected:
+
+	string fileName;
 
 	map<string, vector<string>> strategy;
 
@@ -60,5 +83,7 @@ protected:
 	unsigned int ALLOUTCOMES_Z;
 	unsigned int ITERATIONS;
 	unsigned int MYSCORE;
+
+	unsigned int finalScore;
 };
 

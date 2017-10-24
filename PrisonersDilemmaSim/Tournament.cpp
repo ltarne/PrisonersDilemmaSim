@@ -2,13 +2,29 @@
 
 
 
-Tournament::Tournament(Interpreter* interpreter) {
+Tournament::Tournament(Interpreter * interpreter) {
 	this->interpreter = interpreter;
+}
+
+Tournament::Tournament(Interpreter* interpreter, string baseName, int n) {
+	this->interpreter = interpreter;
+	loadPrisoners(interpreter->generateFileVector(baseName, n));
+}
+
+Tournament::Tournament(const Tournament &tournament) {
+	prisoners = tournament.prisoners;
+	interpreter = tournament.interpreter;
 }
 
 
 Tournament::~Tournament() {
+	while (prisoners.size()) {
+		delete prisoners.back();
+		prisoners.pop_back();
+	}
 }
+
+
 
 void Tournament::loadPrisoners(vector<string> filePaths) {
 	for (int i = 0; i < filePaths.size(); ++i) {
@@ -17,10 +33,11 @@ void Tournament::loadPrisoners(vector<string> filePaths) {
 }
 
 //TODO:Reset variables
-void Tournament::executeGame(Prisoner* x, Prisoner* y) {
-	for (int i = 0; i < 200; ++i) {
+void Tournament::executeGame(Prisoner* x, Prisoner* y, int iterations) {
+	for (int i = 0; i < iterations; ++i) {
 		outcome resultX = interpreter->interpretStrategy(x);
 		outcome resultY = interpreter->interpretStrategy(y);
+
 		//TODO: Handle NONE case
 		if (resultX == resultY) {
 			if (resultX == BETRAY) {
@@ -56,14 +73,24 @@ void Tournament::executeGame(Prisoner* x, Prisoner* y) {
 	}
 	
 
-	cout << "Prisoner X: " << x->getMYSCORE() << " Prisoner Y: " << y->getMYSCORE() << endl;
+	cout << x->getFileName() <<": " << x->getMYSCORE() << y->getFileName() <<  ": " << y->getMYSCORE() << endl;
 	
+	x->resetVariables();
+	y->resetVariables();
 }
 
-void Tournament::executeTournament() {
+void Tournament::executeTournament(int iterations) {
 	for (int i = 0; i < prisoners.size(); ++i) {
 		for (int j = i+1; j < prisoners.size(); ++j) {
-			executeGame(prisoners[i], prisoners[j]);
+			executeGame(prisoners[i], prisoners[j], iterations);
 		}
+		cout << prisoners[i]->getFileName() << ": " << prisoners[i]->getFinalScore() << endl;
+	}
+}
+
+void Tournament::resetTournament() {
+	while (prisoners.size()) {
+		delete prisoners.back();
+		prisoners.pop_back();
 	}
 }

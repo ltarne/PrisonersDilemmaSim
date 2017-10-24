@@ -1,7 +1,4 @@
-﻿  Tournament.cpp
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(14): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
+﻿  StrategyGenerator.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\strategygenerator.cpp(45): warning C4018: '<': signed/unsigned mismatch
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)

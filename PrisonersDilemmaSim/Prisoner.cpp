@@ -3,16 +3,12 @@
 
 
 
-Prisoner::Prisoner(map<string, vector<string>> strategy) {
+Prisoner::Prisoner(map<string, vector<string>> strategy, string fileName) {
 	this->strategy = strategy;
+	this->fileName = fileName;
 
-	LASTOUTCOME = 0;
-	ALLOUTCOMES_W = 0;
-	ALLOUTCOMES_X = 0;
-	ALLOUTCOMES_Y = 0;
-	ALLOUTCOMES_Z = 0;
-	ITERATIONS = 0;
-	MYSCORE = 0;
+	resetVariables();
+	finalScore = 0;
 }
 
 Prisoner::~Prisoner() {
@@ -42,5 +38,15 @@ unsigned int Prisoner::getVariable(const string word) {
 	}
 
 	return NULL;
+}
+
+void Prisoner::resetVariables() {
+	LASTOUTCOME = N;
+	ALLOUTCOMES_W = 0;
+	ALLOUTCOMES_X = 0;
+	ALLOUTCOMES_Y = 0;
+	ALLOUTCOMES_Z = 0;
+	ITERATIONS = 0;
+	MYSCORE = 0;
 }
 
