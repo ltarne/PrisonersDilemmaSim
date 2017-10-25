@@ -51,8 +51,8 @@ void StrategyGenerator::generateStrategies(int n) {
 		}
 
 
-		file << "10 IF " << interpreter->getVariables()[rand() % 6 + 1] << " " << interpreter->getOperators()[rand()%3 + 2] << " " << interpreter->getVariables()[rand() % 6 + 1] << " GOTO 40\n";
-		file << "20 IF " << interpreter->getVariables()[rand() % 6 + 1] << " " << interpreter->getOperators()[rand() % 3 + 2] << " " << interpreter->getVariables()[rand() % 6 + 1] << " GOTO 50\n";
+		file << "10 IF " << interpreter->getRandomVariable() << " " << interpreter->getRandomComparisonOperator() << " " << interpreter->getRandomVariable() << " GOTO 40\n";
+		file << "20 IF " << interpreter->getRandomVariable() << " " << interpreter->getRandomComparisonOperator() << " " << interpreter->getRandomVariable() << " GOTO 50\n";
 		file << "30 RANDOM\n";
 		file << "40 SILENCE\n";
 		file << "50 BETRAY\n";

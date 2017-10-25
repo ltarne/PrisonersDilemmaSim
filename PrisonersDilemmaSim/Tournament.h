@@ -1,5 +1,4 @@
 #pragma once
-#include "Prisoner.h"
 #include "Interpreter.h"
 
 class Tournament

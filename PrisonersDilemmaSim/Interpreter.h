@@ -5,6 +5,7 @@
 #include <iterator>
 #include <ctype.h>
 #include <time.h>
+#include <set>
 
 #include "Prisoner.h"
 #include "UserInterface.h"
@@ -25,17 +26,25 @@ public:
 	Interpreter(UserInterface* ui);
 	~Interpreter();
 
-	inline const string* getVariables() {
+	inline const set<string> getVariables() {
 		return VARIABLES;
 	}
 
-	inline const string* getKeywords() {
+	inline const set<string> getKeywords() {
 		return KEY_WORDS;
 	}
 
-	inline const string* getOperators() {
-		return OPERATORS;
+	inline const set<string> getComparisonOperators() {
+		return COMPARISON_OPERATORS;
 	}
+
+	inline const set<string> getArithmeticOperators() {
+		return ARITHMETIC_OPERATORS;
+	}
+
+	string getRandomComparisonOperator();
+
+	string getRandomVariable();
 
 	/* Generate a strategy map from a file and create a prisoner.
 	* fileName: File path of strategy file
@@ -52,19 +61,19 @@ public:
 	*/
 	bool isInteger(string testString);
 
-
+	bool isBooleanExpressions(vector<string> expression);
 
 	void operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner);
-	
 
 	void operationGOTO(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, const map<string, vector<string>> &strategy);
 
 	vector<string> generateFileVector(string baseName, int n);
 
 protected:
-	const string KEY_WORDS[5] = { "IF", "GOTO", "BETRAY", "SILENCE", "RANDOM" };
-	const string VARIABLES[7] = { "LASTOUTCOME", "ALLOUTCOMES_W", "ALLOUTCOMES_X", "ALLOUTCOMES_Y", "ALLOUTCOMES_Z", "ITERATIONS", "MYSCORE" };
-	const string OPERATORS[5] = { "+", "-", ">", "<", "=" };
+	const set<string> KEY_WORDS = { "IF", "GOTO", "BETRAY", "SILENCE", "RANDOM" };
+	const set<string> VARIABLES = { "LASTOUTCOME", "ALLOUTCOMES_W", "ALLOUTCOMES_X", "ALLOUTCOMES_Y", "ALLOUTCOMES_Z", "ITERATIONS", "MYSCORE" };
+	const set<string> COMPARISON_OPERATORS =  { ">", "<", "=" };
+	const set<string> ARITHMETIC_OPERATORS = { "+", "-", };
 	const map<string, overallOutcome> LITERALS = { {"W", W},{"X", X},{"Y", Y}, {"Z",Z } };
 
 	UserInterface* ui;

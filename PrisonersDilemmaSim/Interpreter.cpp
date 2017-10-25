@@ -10,6 +10,18 @@ Interpreter::Interpreter(UserInterface* ui) {
 Interpreter::~Interpreter() {
 }
 
+string Interpreter::getRandomComparisonOperator() {
+	set<string>::const_iterator iterator = COMPARISON_OPERATORS.begin();
+	advance(iterator, rand() % 3);
+	return *iterator;
+}
+
+string Interpreter::getRandomVariable() {
+	set<string>::const_iterator iterator = VARIABLES.begin();
+	advance(iterator, rand() % 6+1);
+	return *iterator;
+}
+
 Prisoner* Interpreter::interpretFile(string fileName) {
 	map<string, vector<string>> instructions;
 	
@@ -53,17 +65,17 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 				referencedLines.push_back(splitLine[2]);
 			}
 		}
-		
 
-		
+
+
 		if (splitLine[1] == "IF") {
+
 			//Check that lines of 7 long are in the form of a valid IF
+
 			if (splitLine.size() < 7 ||
-				(!VARIABLES->find(splitLine[2]) && !isInteger(splitLine[2])) ||
-				!OPERATORS->find(splitLine[3]) ||
-				(!VARIABLES->find(splitLine[4]) && !isInteger(splitLine[4])) ||
-				splitLine[5] != "GOTO" ||
-				!isInteger(splitLine[6])) {
+				isBooleanExpressions(vector<string>(splitLine.begin()+2,splitLine.end()-2)) ||
+				splitLine[splitLine.size()-2] != "GOTO" ||
+				!isInteger(splitLine.back())) {
 				ui->display("Invalid syntax: Line does not fit IF criteria!");
 				return NULL;
 			}
@@ -89,7 +101,7 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 			return NULL;
 		}
 	}
-	
+
 
 	return new Prisoner(instructions, fileName);
 }
@@ -99,20 +111,20 @@ outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
 
 	map<string, vector<string>>::const_iterator mapPosition = strategy.begin();
 	vector<string> line;
-	
-	
+
+
 
 	while (mapPosition != strategy.end()) {
 		line = mapPosition->second;
-		
-		if (line[0] == "BETRAY") {
+
+		if (line[0][0] == 'B') {
 			return BETRAY;
 		}
-		else if (line[0] == "SILENCE") {
+		else if (line[0][0] == 'S') {
 			return SILENCE;
 		}
-		else if (line[0] == "RANDOM") {
-			
+		else if (line[0][0] == 'R') {
+
 			if (rand() % 2) {
 				return BETRAY;
 			}
@@ -120,10 +132,10 @@ outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
 				return SILENCE;
 			}
 		}
-		else if (line[0] == "IF") {
+		else if (line[0][0] == 'I') {
 			operationIF(&mapPosition, line, prisoner);
 		}
-		else if (line[0] == "GOTO") {
+		else if (line[0][0] == 'G') {
 			operationGOTO(&mapPosition, line, strategy);
 		}
 
@@ -141,6 +153,41 @@ bool Interpreter::isInteger(string testString) {
 	return true;
 }
 
+bool Interpreter::isBooleanExpressions(vector<string> expression) {
+	bool isStatementComplete = false;
+	bool isCompared = false;
+
+	if (expression.size() < 3) {
+		return false;
+	}
+
+	for (int i = 0; i < expression.size(); ++i) {
+		if (COMPARISON_OPERATORS.count(expression[i])) {
+			if (isCompared) {
+				return false;
+			}
+			isCompared = true;
+		}
+		else if ((isInteger(expression[i]) ||
+			VARIABLES.count(expression[i]) ||
+			LITERALS.count(expression[i]))) {
+			if(isStatementComplete) {
+				return false;
+			}
+			isStatementComplete = true;	
+		}
+		else if (ARITHMETIC_OPERATORS.count(expression[i])) {
+			if (!isStatementComplete) {
+				return false;
+			}
+			isStatementComplete = false;
+		}
+		
+	}
+
+	return true;
+}
+
 
 void Interpreter::operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner) {
 	//TODO: Add support for + and -
@@ -149,13 +196,13 @@ void Interpreter::operationIF(map<string, vector<string>>::const_iterator* progr
 	unsigned int rhs = prisoner->getVariable(line[3]);
 	bool result = false;
 
-	if (line[2] == ">") {
+	if (line[2][0] == '>') {
 		result = lhs > rhs;
 	}
-	else if (line[2] == "<") {
+	else if (line[2][0] == '<') {
 		result = lhs < rhs;
 	}
-	else if (line[2] == "=") {
+	else if (line[2][0] == '=') {
 		result = lhs == rhs;
 	}
 
