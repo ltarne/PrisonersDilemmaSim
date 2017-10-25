@@ -22,6 +22,15 @@ string Interpreter::getRandomVariable() {
 	return *iterator;
 }
 
+int Interpreter::getVariable(string word, Prisoner* prisoner) {
+	if (isInteger(word)) {
+		return stoi(word);
+	}
+	else {
+		return prisoner->getVariable(word);
+	}
+}
+
 Prisoner* Interpreter::interpretFile(string fileName) {
 	map<string, vector<string>> instructions;
 	
@@ -29,7 +38,7 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 	ifstream file(fileName);
 
 	if (!file.is_open()) {
-		cerr << "Could not open file!\n";
+		ui->display("Could not open file!");
 		return NULL;
 	}
 	
@@ -73,7 +82,7 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 			//Check that lines of 7 long are in the form of a valid IF
 
 			if (splitLine.size() < 7 ||
-				isBooleanExpressions(vector<string>(splitLine.begin()+2,splitLine.end()-2)) ||
+				!isBooleanExpressions(vector<string>(splitLine.begin()+2,splitLine.end()-2)) ||
 				splitLine[splitLine.size()-2] != "GOTO" ||
 				!isInteger(splitLine.back())) {
 				ui->display("Invalid syntax: Line does not fit IF criteria!");
@@ -161,16 +170,25 @@ bool Interpreter::isBooleanExpressions(vector<string> expression) {
 		return false;
 	}
 
+	if (expression[0] == "LASTOUTCOME") {
+		if (expression.size() != 3 || expression[1] != "=" || !LITERALS.count(expression[2]) ) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 	for (int i = 0; i < expression.size(); ++i) {
 		if (COMPARISON_OPERATORS.count(expression[i])) {
 			if (isCompared) {
 				return false;
 			}
 			isCompared = true;
+			isStatementComplete = false;
 		}
 		else if ((isInteger(expression[i]) ||
-			VARIABLES.count(expression[i]) ||
-			LITERALS.count(expression[i]))) {
+			VARIABLES.count(expression[i]))) {
 			if(isStatementComplete) {
 				return false;
 			}
@@ -188,26 +206,71 @@ bool Interpreter::isBooleanExpressions(vector<string> expression) {
 	return true;
 }
 
+bool Interpreter::evaluateBooleanExpression(vector<string> expression, Prisoner* prisoner) {
+	bool result;
+	if (expression[0] == "LASTOUTCOME") {
+		return prisoner->getLASTOUTCOME() == LITERALS.find(expression[2])->second;
+	}
+	else if (expression[2] == "LASTOUTCOME") {
+		return prisoner->getLASTOUTCOME() == LITERALS.find(expression[0])->second;
+	}
+
+	int lhs = getVariable(expression[0], prisoner);
+
+	int i = 1;
+	string comparison;
+	while (!COMPARISON_OPERATORS.count(expression[i])) {
+		if (expression[i] == "+") {
+			lhs += getVariable(expression[i], prisoner);
+			i += 2;
+		}
+		else if (expression[i] == "-") {
+			lhs -= getVariable(expression[i], prisoner);
+			i += 2;
+		}
+
+	}
+	comparison = expression[i];
+	i++;
+	int rhs = getVariable(expression[i], prisoner);
+	for (int j = i+1; j < expression.size(); ++j) {
+		if (expression[j] == "+") {
+			lhs += getVariable(expression[j], prisoner);
+			j++;
+		}
+		else if (expression[j] == "-") {
+			lhs -= getVariable(expression[j], prisoner);
+			j++;
+		}
+	}
+
+	if (comparison[0] == '>') {
+		return lhs > rhs;
+	}
+	else if (comparison[0] == '<') {
+		return lhs < rhs;
+	}
+	else if (comparison[0] == '=') {
+		return lhs == rhs;
+	}
+
+
+	return false;
+}
+
 
 void Interpreter::operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner) {
 	//TODO: Add support for + and -
 	//TODO: Add support for X, Y, Z, W
-	unsigned int lhs = prisoner->getVariable(line[1]);
-	unsigned int rhs = prisoner->getVariable(line[3]);
+	/*unsigned int lhs = prisoner->getVariable(line[1]);
+	unsigned int rhs = prisoner->getVariable(line[3]);*/
 	bool result = false;
 
-	if (line[2][0] == '>') {
-		result = lhs > rhs;
-	}
-	else if (line[2][0] == '<') {
-		result = lhs < rhs;
-	}
-	else if (line[2][0] == '=') {
-		result = lhs == rhs;
-	}
+
+	result = evaluateBooleanExpression(vector<string>{&line[1], &line[line.size() - 2]}, prisoner);
 
 	if (result) {
-		operationGOTO(programPosition, vector<string>{line[4], line[5]}, prisoner->getStrategy());
+		operationGOTO(programPosition, vector<string>{line[line.size() - 2], line[line.size() - 1]}, prisoner->getStrategy());
 	}
 	else {
 		(*programPosition)++;

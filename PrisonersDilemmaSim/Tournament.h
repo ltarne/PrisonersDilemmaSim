@@ -19,9 +19,15 @@ public:
 
 	void executeGame(Prisoner* x, Prisoner* y, int iterations);
 
+	void executeGangGame(vector<Prisoner*> xGang, vector<Prisoner*> yGang, int iterations);
+
 	void compareAllPrisoners(int iterations);
 
+	void compareAllGangs(int iterations);
+
 	void executeTournament();
+
+	void executeGangTournament();
 
 	void displayResults();
 

@@ -37,6 +37,10 @@ int main() {
 
 			break;
 
+		case 4:
+			tournament.executeGangTournament();
+			break;
+
 		default:
 			//If user enters a string or a invalid number a warning will be displayed
 			ui.display("Invalid option!");

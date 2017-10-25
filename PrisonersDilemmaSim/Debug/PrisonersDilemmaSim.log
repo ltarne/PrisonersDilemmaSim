@@ -1,17 +1,9 @@
-﻿  StrategyGenerator.cpp
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\strategygenerator.cpp(45): warning C4018: '<': signed/unsigned mismatch
-  Interpreter.cpp
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(98): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(148): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(164): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Compiling...
-  main.cpp
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\main.cpp(16): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Tournament.cpp
+﻿  Tournament.cpp
 c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(41): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(96): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(97): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(109): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(108): warning C4101: 'yOverall': unreferenced local variable
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(131): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(132): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(152): warning C4018: '<': signed/unsigned mismatch
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)

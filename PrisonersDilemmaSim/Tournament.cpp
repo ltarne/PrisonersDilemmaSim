@@ -39,8 +39,15 @@ void Tournament::gatherTournamentData(int * n, string * baseName, int * iteratio
 
 void Tournament::loadPrisoners(vector<string> filePaths) {
 	for (int i = 0; i < filePaths.size(); ++i) {
-		prisoners.push_back(interpreter->interpretFile(filePaths[i]));
-		results.insert(pair<string, vector<int>>(filePaths[i], vector<int>()));
+		Prisoner* temp = interpreter->interpretFile(filePaths[i]);
+		if (temp) {
+			prisoners.push_back(temp);
+			results.insert(pair<string, vector<int>>(filePaths[i], vector<int>()));
+		}
+		else {
+			return;
+		}
+		
 	}
 }
 
@@ -54,6 +61,7 @@ void Tournament::executeGame(Prisoner* x, Prisoner* y, int iterations) {
 			if (resultX == BETRAY) {
 				x->incrementALLOUTCOMES_Z();
 				x->incrementMYSCORE(4);
+				
 				y->incrementALLOUTCOMES_Z();
 				y->incrementMYSCORE(4);
 			}
@@ -92,6 +100,33 @@ void Tournament::executeGame(Prisoner* x, Prisoner* y, int iterations) {
 	y->resetVariables();
 }
 
+void Tournament::executeGangGame(vector<Prisoner*> xGang, vector<Prisoner*> yGang, int iterations) {
+	for (int j = 0; j < iterations; ++j) {
+		vector<outcome> xOutcomes;
+		vector<outcome> yOutcomes;
+		
+		outcome yOverall;
+		for (int i = 0; i < xGang.size(); ++i) {
+			xOutcomes.push_back(interpreter->interpretStrategy(xGang[i]));
+			yOutcomes.push_back(interpreter->interpretStrategy(yGang[i]));
+		}
+
+		int xSilent = count(xOutcomes.begin(), xOutcomes.end(), SILENCE);
+		int xBetray = count(xOutcomes.begin(), xOutcomes.end(), BETRAY);
+
+
+		int ySilent = count(yOutcomes.begin(), yOutcomes.end(), SILENCE);
+		int yBetray = count(yOutcomes.begin(), yOutcomes.end(), BETRAY);
+
+
+
+		
+		
+	}
+	
+
+}
+
 void Tournament::compareAllPrisoners(int iterations) {
 	for (int i = 0; i < prisoners.size(); ++i) {
 		for (int j = i + 1; j < prisoners.size(); ++j) {
@@ -99,6 +134,10 @@ void Tournament::compareAllPrisoners(int iterations) {
 		}
 		cout << prisoners[i]->getFileName() << ": " << prisoners[i]->getFinalScore() << endl;
 	}
+}
+
+void Tournament::compareAllGangs(int iterations) {
+	executeGangGame(vector<Prisoner*>(&prisoners[0], &prisoners[(prisoners.size() - 1) / 2]), vector<Prisoner*>(&prisoners[prisoners.size() / 2], &prisoners[prisoners.size()-1]), iterations);
 }
 
 
@@ -110,10 +149,31 @@ void Tournament::executeTournament() {
 	gatherTournamentData(&n, &baseName, &iterations);
 
 	loadTournament(baseName, n);
-
+	if (prisoners.size() < n) {
+		ui->display("Tournament load error!");
+		return;
+	}
+	ui->display("Tournament loaded...");
 	compareAllPrisoners(iterations);
+	//TODO: Fix results rolling over
 
 	displayResults();
+
+	resetTournament();
+}
+
+void Tournament::executeGangTournament() {
+	string baseName;
+	int n = 0;
+	int iterations = 0;
+
+	gatherTournamentData(&n, &baseName, &iterations);
+
+	loadTournament(baseName, n);
+
+	compareAllGangs(iterations);
+
+
 
 	resetTournament();
 }

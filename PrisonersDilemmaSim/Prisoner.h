@@ -52,6 +52,10 @@ public:
 		finalScore += years;
 	}
 
+	inline void setLASTOUTCOME(overallOutcome outcome) {
+		LASTOUTCOME = outcome;
+	}
+
 
 	inline unsigned int getMYSCORE() {
 		return MYSCORE;
@@ -63,6 +67,10 @@ public:
 
 	inline unsigned int getFinalScore() {
 		return finalScore;
+	}
+
+	inline int getLASTOUTCOME() {
+		return LASTOUTCOME;
 	}
 
 	unsigned int getVariable(const string word);

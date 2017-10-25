@@ -58,8 +58,50 @@ protected:
 		"***************************************************\n"
 		"***************************************************\n";
 
-	static const int optionNum = 4;
-	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy", "2. Generate Strategies", "3. Execute Tournament"};
+	string spy = 
+		"                    .lxl;'.\n"
+		"                    cNMWNKc\n"
+		"                    .cdo:,."
+		"                      ..';:clcc::;,'....\n"
+		"                   .:dOKNWMMMMWNK0Okxdoc:,.\n"
+		"                .cxKWMWXKOxxkkkkd;.;ooc;,...'..\n"
+		"             .cx0KOkOOxoc. .dOOOx; ...    .okxxd;\n"
+		"           .:dkxc'';kNK0k'  ....   .   ...  ....\n"
+		"          .,ccc::xK0xdc''.   ''   .c.\n"
+		"              .oXMMMXo,,co,  .,:;\n"
+		"            .c0WMMMMMWOc:OXd::kNNk;\n"
+		"          .:OWMMMMMMMMWO;cXMWWMMMMk.\n"
+		"         'kNMMMWNNWMMMMN: ;0WMMMMMO.\n"
+		"       .cKMMMW0oo0NMMMMX:  'xNMMMMK,\n"
+		"      'xNMMWXkdx0XWMMMMX:   .lXMMMX;\n"
+		"    .cKMMMNkx0WMMMMMMMMX:     ;OWMN:\n"
+		"   'xNMMWOldNMMMMMMMMMMX:      .dNWl\n"
+		" .lKWNXKl.cXMMMMMMMMMMMNc       .c0o.\n"
+		".dNMNOl' 'OMMMMMMMMMMMMWl         ',\n"
+		",KMMWNK:.oWMMMMMMMMMMMMWd.\n"
+		".kMMMMWd:0MMMMMMMMMMMMMMk.\n"
+		" lNMMMK:oNMMMMMMMMMMMMMM0'\n"
+		" .OMXk;'kMMMMMMMMMMMMMMMX;\n"
+		"  ,loo;cXMMMMMMMMMMMMMMMWo\n"
+		"    .:,dWMMMMMMMMMMMMMMMMO.\n"
+		"    .ll0MMMMMMMMMMMMMMMMMXc\n"
+		"    'coXMMMMMMMMMMMMMMMMMWx.\n"
+		".,..;:oNMMMMMMMMMMMMMMMMMMK;\n"
+		".;ccc,dWMMMMMMMMMMMMMMMMMMWd.\n"
+		"      :0NWMMMMMMMMMMMMMMMMM0'\n"
+		"       ..;cdxxxkO00KKKKK00Od.\n"
+		"           'cdxddxxxxxxxdo,\n"
+		"  ..       .:ddk0NMMMMMMMM0,\n"
+		"  'ol'.    ,0NKkxdxkKWMMMMWd.\n"
+		"  'OWXOxdoxKWMMMMN0d;;d0WMMK;        .\n"
+		" .xWKc,cxKNWWWWWN0d,   .;xNWk.     .cc.\n"
+		" .OMO.   .';;;;;'.        ;ON0olookOo.\n"
+		"  :KK;                     .kKxxxxl'\n"
+		"   'od,                     .;.\n"
+		"     ..\n";
+
+	static const int optionNum = 5;
+	string options[optionNum] = { "0. Exit", " 1. Manually Enter Strategy", "2. Generate Strategies", "3. Execute Tournament", "4. Execute Gang Tournament"};
 
 	SMALL_RECT windowSize;
 	HANDLE currentConsole;

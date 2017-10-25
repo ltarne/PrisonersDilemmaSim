@@ -46,6 +46,8 @@ public:
 
 	string getRandomVariable();
 
+	int getVariable(string word, Prisoner* prisoner);
+
 	/* Generate a strategy map from a file and create a prisoner.
 	* fileName: File path of strategy file
 	*/
@@ -62,6 +64,8 @@ public:
 	bool isInteger(string testString);
 
 	bool isBooleanExpressions(vector<string> expression);
+
+	bool evaluateBooleanExpression(vector<string> expression, Prisoner* prisoner);
 
 	void operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner);
 
