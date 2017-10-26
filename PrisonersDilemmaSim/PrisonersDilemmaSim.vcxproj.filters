@@ -33,6 +33,9 @@
     <ClCompile Include="Prisoner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gang.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UserInterface.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Prisoner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gang.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,7 +7,7 @@
 #include <time.h>
 #include <set>
 
-#include "Prisoner.h"
+#include "Gang.h"
 #include "UserInterface.h"
 
 using namespace std;
@@ -67,7 +67,7 @@ public:
 
 	bool evaluateBooleanExpression(vector<string> expression, Prisoner* prisoner);
 
-	void operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner);
+	void operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner, const map<string, vector<string>> &strategy);
 
 	void operationGOTO(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, const map<string, vector<string>> &strategy);
 
@@ -75,10 +75,10 @@ public:
 
 protected:
 	const set<string> KEY_WORDS = { "IF", "GOTO", "BETRAY", "SILENCE", "RANDOM" };
-	const set<string> VARIABLES = { "LASTOUTCOME", "ALLOUTCOMES_W", "ALLOUTCOMES_X", "ALLOUTCOMES_Y", "ALLOUTCOMES_Z", "ITERATIONS", "MYSCORE" };
+	const set<string> VARIABLES = { "LASTOUTCOME", "ALLOUTCOMES_W", "ALLOUTCOMES_X", "ALLOUTCOMES_Y", "ALLOUTCOMES_Z", "ALLOUTCOMES_A", "ALLOUTCOMES_B", "ALLOUTCOMES_C", "ITERATIONS", "MYSCORE" };
 	const set<string> COMPARISON_OPERATORS =  { ">", "<", "=" };
 	const set<string> ARITHMETIC_OPERATORS = { "+", "-", };
-	const map<string, overallOutcome> LITERALS = { {"W", W},{"X", X},{"Y", Y}, {"Z",Z } };
+	const map<string, overallOutcome> LITERALS = { {"W", W},{"X", X},{"Y", Y}, {"Z",Z }, {"A", A}, {"B", B}, {"C", C} };
 
 	UserInterface* ui;
 

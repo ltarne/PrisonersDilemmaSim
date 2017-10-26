@@ -142,7 +142,7 @@ outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
 			}
 		}
 		else if (line[0][0] == 'I') {
-			operationIF(&mapPosition, line, prisoner);
+			operationIF(&mapPosition, line, prisoner, strategy);
 		}
 		else if (line[0][0] == 'G') {
 			operationGOTO(&mapPosition, line, strategy);
@@ -259,7 +259,7 @@ bool Interpreter::evaluateBooleanExpression(vector<string> expression, Prisoner*
 }
 
 
-void Interpreter::operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner) {
+void Interpreter::operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner, const map<string, vector<string>> &strategy) {
 	//TODO: Add support for + and -
 	//TODO: Add support for X, Y, Z, W
 	/*unsigned int lhs = prisoner->getVariable(line[1]);
@@ -270,7 +270,7 @@ void Interpreter::operationIF(map<string, vector<string>>::const_iterator* progr
 	result = evaluateBooleanExpression(vector<string>{&line[1], &line[line.size() - 2]}, prisoner);
 
 	if (result) {
-		operationGOTO(programPosition, vector<string>{line[line.size() - 2], line[line.size() - 1]}, prisoner->getStrategy());
+		operationGOTO(programPosition, vector<string>{line[line.size() - 2], line[line.size() - 1]}, strategy);
 	}
 	else {
 		(*programPosition)++;

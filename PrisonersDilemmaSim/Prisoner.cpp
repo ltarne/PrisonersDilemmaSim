@@ -3,12 +3,18 @@
 
 
 
+Prisoner::Prisoner() {
+	strategy = map<string, vector<string>>();
+	fileName = "";
+
+	resetVariables();
+}
+
 Prisoner::Prisoner(map<string, vector<string>> strategy, string fileName) {
 	this->strategy = strategy;
 	this->fileName = fileName;
 
 	resetVariables();
-	finalScore = 0;
 }
 
 Prisoner::~Prisoner() {
@@ -30,6 +36,15 @@ unsigned int Prisoner::getVariable(const string word) {
 	else if (word == "ALLOUTCOMES_Z") {
 		return ALLOUTCOMES_Z;
 	}
+	else if (word == "ALLOUTCOMES_A") {
+		return ALLOUTCOMES_A;
+	}
+	else if (word == "ALLOUTCOMES_B") {
+		return ALLOUTCOMES_B;
+	}
+	else if (word == "ALLOUTCOMES_C") {
+		return ALLOUTCOMES_C;
+	}
 	else if (word == "ITERATIONS") {
 		return ITERATIONS;
 	}
@@ -46,6 +61,9 @@ void Prisoner::resetVariables() {
 	ALLOUTCOMES_X = 0;
 	ALLOUTCOMES_Y = 0;
 	ALLOUTCOMES_Z = 0;
+	ALLOUTCOMES_A = 0;
+	ALLOUTCOMES_B = 0;
+	ALLOUTCOMES_C = 0;
 	ITERATIONS = 0;
 	MYSCORE = 0;
 }

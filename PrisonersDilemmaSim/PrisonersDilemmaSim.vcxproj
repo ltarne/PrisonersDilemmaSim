@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Gang.cpp" />
     <ClCompile Include="Interpreter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Prisoner.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Gang.h" />
     <ClInclude Include="Interpreter.h" />
     <ClInclude Include="Prisoner.h" />
     <ClInclude Include="StrategyGenerator.h" />

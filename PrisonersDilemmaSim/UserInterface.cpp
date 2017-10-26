@@ -53,22 +53,26 @@ string UserInterface::gatherString() {
 
 	string n;
 	cout << ">> ";
-	cin.ignore(10000, '\n');
+	
 	getline(cin, n);
 
 	cin.clear();
+	//cin.ignore(10000, '\n');
 	return n;
 }
 
 int UserInterface::gatherInteger() {
 	int n;
 	cout << ">> ";
+	
 	cin >> n;
 	if (cin.fail()) {
 		cin.clear();
+		cin.ignore(1000, '\n');
 		return -1;
 	}
 	cin.clear();
+	cin.ignore(10000, '\n');
 
 	return n;
 }

@@ -1,23 +1,51 @@
-﻿  Interpreter.cpp
+﻿  Gang.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\Gang.h(30): warning C4018: '<': signed/unsigned mismatch
+  Interpreter.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\Gang.h(30): warning C4018: '<': signed/unsigned mismatch
 Interpreter.cpp(107): warning C4018: '<': signed/unsigned mismatch
 Interpreter.cpp(157): warning C4018: '<': signed/unsigned mismatch
 Interpreter.cpp(182): warning C4018: '<': signed/unsigned mismatch
 Interpreter.cpp(236): warning C4018: '<': signed/unsigned mismatch
 Interpreter.cpp(210): warning C4101: 'result': unreferenced local variable
   main.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\Gang.h(30): warning C4018: '<': signed/unsigned mismatch
 main.cpp(16): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Prisoner.cpp
+Prisoner.cpp(52): warning C4244: 'return': conversion from 'float' to 'unsigned int', possible loss of data
   StrategyGenerator.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\Gang.h(30): warning C4018: '<': signed/unsigned mismatch
 StrategyGenerator.cpp(45): warning C4018: '<': signed/unsigned mismatch
   Tournament.cpp
-Tournament.cpp(41): warning C4018: '<': signed/unsigned mismatch
-Tournament.cpp(101): warning C4018: '<': signed/unsigned mismatch
-Tournament.cpp(102): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\Gang.h(30): warning C4018: '<': signed/unsigned mismatch
+Tournament.cpp(45): warning C4018: '<': signed/unsigned mismatch
+Tournament.cpp(66): warning C4018: '<': signed/unsigned mismatch
+Tournament.cpp(160): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+Tournament.cpp(161): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+Tournament.cpp(173): warning C4018: '<': signed/unsigned mismatch
+Tournament.cpp(172): warning C4101: 'yOverall': unreferenced local variable
+Tournament.cpp(229): warning C4018: '<': signed/unsigned mismatch
+Tournament.cpp(230): warning C4018: '<': signed/unsigned mismatch
+Tournament.cpp(238): warning C4018: '<': signed/unsigned mismatch
+Tournament.cpp(239): warning C4018: '<': signed/unsigned mismatch
+Tournament.cpp(254): warning C4018: '<': signed/unsigned mismatch
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.10.25017\include\utility(189): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Tournament.cpp(159): note: see reference to function template instantiation 'std::pair<int,int>::pair<float,float,void,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=float,
+              _Other2=float
+          ]
+  Tournament.cpp(159): note: see reference to function template instantiation 'std::pair<int,int>::pair<float,float,void,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=float,
+              _Other2=float
+          ]
   UserInterface.cpp
 UserInterface.cpp(25): warning C4018: '<=': signed/unsigned mismatch
   Generating code
-  1179 of 1184 functions (99.6%) were compiled, the rest were copied from previous compilation.
-    1082 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+  801 of 1545 functions (51.8%) were compiled, the rest were copied from previous compilation.
+    556 functions were new in current compilation
+    202 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Release\PrisonersDilemmaSim.exe

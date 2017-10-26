@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include "Interpreter.h"
 
 class Tournament
@@ -17,9 +18,13 @@ public:
 
 	void loadPrisoners(vector<string> filePaths);
 
+	void loadGangs();
+
+	void updatePrisoner(Prisoner* prisoner, overallOutcome result);
+
 	void executeGame(Prisoner* x, Prisoner* y, int iterations);
 
-	void executeGangGame(vector<Prisoner*> xGang, vector<Prisoner*> yGang, int iterations);
+	void executeGangGame(Gang* xGang, Gang* yGang, int iterations);
 
 	void compareAllPrisoners(int iterations);
 
@@ -29,17 +34,20 @@ public:
 
 	void executeGangTournament();
 
-	void displayResults();
+	void displayResults(bool detail);
 
 
 	void resetTournament();
 
 protected:
-	vector<Prisoner*> prisoners;
 	Interpreter* interpreter;
 	UserInterface* ui;
-	map<string, vector<int>> results;
 
+	vector<Prisoner*> prisoners;
+	vector<Gang*> gangs;
+	
+	map<string, int> results;
+	map<string, pair<int, int>> gameResults;
 
 
 };

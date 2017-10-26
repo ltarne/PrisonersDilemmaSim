@@ -1,9 +1,4 @@
-﻿  Tournament.cpp
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(41): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(109): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(108): warning C4101: 'yOverall': unreferenced local variable
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(131): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(132): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(152): warning C4018: '<': signed/unsigned mismatch
+﻿  Gang.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\gang.h(37): warning C4018: '<': signed/unsigned mismatch
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)

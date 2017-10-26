@@ -24,6 +24,16 @@ public:
 	/* Displays the main menu options */
 	void mainMenu();
 
+	inline void displayDivider() {
+		cout << space << divider << space;
+	}
+
+	inline void displaySpy() {
+		cout << spy;
+	}
+
+	void displayReport();
+
 
 	/*  */
 	string gatherString();

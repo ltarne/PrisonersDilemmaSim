@@ -10,16 +10,20 @@ enum overallOutcome {
 	W,
 	X,
 	Y,
-	Z
+	Z,
+	A,
+	B,
+	C
 };
 
 class Prisoner
 {
 public:
+	Prisoner();
 	Prisoner(map<string, vector<string>> strategy, string fileName);
 	~Prisoner();
 
-	inline const map<string, vector<string>>& getStrategy() const{
+	virtual const map<string, vector<string>>& getStrategy() {
 		return strategy;
 	}
 
@@ -43,13 +47,24 @@ public:
 		ALLOUTCOMES_Z++;
 	}
 
+	inline void incrementALLOUTCOMES_A() {
+		ALLOUTCOMES_A++;
+	}
+
+	inline void incrementALLOUTCOMES_B() {
+		ALLOUTCOMES_B++;
+	}
+
+	inline void incrementALLOUTCOMES_C() {
+		ALLOUTCOMES_C++;
+	}
+
 	inline void incrementITERATIONS() {
 		ITERATIONS++;
 	}
 
-	inline void incrementMYSCORE(unsigned int years) {
+	inline void incrementMYSCORE(float years) {
 		MYSCORE += years;
-		finalScore += years;
 	}
 
 	inline void setLASTOUTCOME(overallOutcome outcome) {
@@ -57,7 +72,7 @@ public:
 	}
 
 
-	inline unsigned int getMYSCORE() {
+	inline float getMYSCORE() {
 		return MYSCORE;
 	}
 
@@ -65,9 +80,6 @@ public:
 		return fileName;
 	}
 
-	inline unsigned int getFinalScore() {
-		return finalScore;
-	}
 
 	inline int getLASTOUTCOME() {
 		return LASTOUTCOME;
@@ -89,9 +101,10 @@ protected:
 	unsigned int ALLOUTCOMES_X;
 	unsigned int ALLOUTCOMES_Y;
 	unsigned int ALLOUTCOMES_Z;
+	unsigned int ALLOUTCOMES_A;
+	unsigned int ALLOUTCOMES_B;
+	unsigned int ALLOUTCOMES_C;
 	unsigned int ITERATIONS;
-	unsigned int MYSCORE;
-
-	unsigned int finalScore;
+	float MYSCORE;
 };
 
