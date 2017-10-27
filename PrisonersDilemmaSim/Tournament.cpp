@@ -50,16 +50,37 @@ vector<string> Tournament::prisonersToFileNames(vector<Prisoner*> prisonerList) 
 }
 
 void Tournament::loadPrisoners(vector<string> filePaths) {
+	vector<thread> threads;
+	threadLock lock;
+	lock.prisoners = &prisoners;
+	//Hack
+	Interpreter* tempInt = interpreter;
 	for (int i = 0; i < filePaths.size(); ++i) {
+		threads.push_back(thread([&lock, filePaths, i, tempInt] {
+			Prisoner* temp = tempInt->interpretFile(filePaths[i]);
+			if (temp) {
+				lock.mut.lock();
+				lock.prisoners->push_back(temp);
+				lock.mut.unlock();
+			}
+			else {
+				return;
+			}
+		}));
+
+
+		/*
 		Prisoner* temp = interpreter->interpretFile(filePaths[i]);
 		if (temp) {
 			prisoners.push_back(temp);
-			
 		}
 		else {
 			return;
 		}
-		
+		*/
+	}
+	for (int j = 0; j < threads.size(); ++j) {
+		threads[j].join();
 	}
 }
 
@@ -69,12 +90,16 @@ void Tournament::loadGangs() {
 		return;
 	}
 
+	ui->display("What percentage of iterations should have a spy? y/n");
+	float spyPercentage = ui->gatherInteger();
+
 	vector<Prisoner*> temp = prisoners;
 
 	for (int i = 0; i < prisoners.size() / 2; ++i) {
 		random_shuffle(temp.begin(), temp.end());
-		Gang* tempA = new Gang(vector<Prisoner*>(temp.begin(), temp.end() - temp.size() / 2), 10.0f);
-		Gang* tempB = new Gang(vector<Prisoner*>(temp.end() - temp.size() / 2, temp.end()), 10.0f);
+		Gang* tempA = new Gang(vector<Prisoner*>(temp.begin(), temp.end() - temp.size() / 2), spyPercentage);
+		Gang* tempB = new Gang(vector<Prisoner*>(temp.end() - temp.size() / 2, temp.end()), spyPercentage);
+		
 		reports.insert(pair<string, Report<unsigned int>>(tempA->getFileName(), Report<unsigned int>(("Gang " + to_string(i*2)), prisonersToFileNames(vector<Prisoner*>(temp.begin(), temp.end() - temp.size() / 2)))));
 		gangs.push_back(tempA);
 		reports.insert(pair<string, Report<unsigned int>>(tempB->getFileName(), Report<unsigned int>("Gang " + to_string((i * 2) + 1), prisonersToFileNames(vector<Prisoner*>(temp.begin(), temp.end() - temp.size() / 2)))));
@@ -386,9 +411,10 @@ void Tournament::executeGangTournament() {
 	string baseName;
 	int n = 0;
 	int iterations = 0;
+	float spyPercentage = 0.0f;
 
 	gatherTournamentData(&n, &baseName, &iterations);
-
+	
 	loadTournament(baseName, n);
 
 	loadGangs();

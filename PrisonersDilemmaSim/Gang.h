@@ -48,6 +48,10 @@ public:
 		return strategies.begin() + (rand() % strategies.size());
 	}
 
+	inline void setSpyPercentage(float spyPercentage) {
+		this->spyPercentage = spyPercentage;
+	}
+
 	void chooseSpyAndLeader();
 
 	bool findSpy();

@@ -1,8 +1,14 @@
 #pragma once
 #include <algorithm>
 #include <mutex>
+#include <thread>
 #include "Interpreter.h"
 #include "Report.h"
+
+struct threadLock {
+	vector<Prisoner*>* prisoners;
+	mutex mut;
+};
 
 class Tournament
 {
