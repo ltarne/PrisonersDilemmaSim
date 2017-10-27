@@ -1,3 +1,7 @@
+/* Deals with displaying things to screen in a formatted way
+* Author: Luke Burton 140274882
+* Date: 27/10/2017
+*/
 #pragma once
 #include <Windows.h>
 #include <iostream>
@@ -30,6 +34,7 @@ public:
 		cout << space << divider << space;
 	}
 
+	/*Display a cheeky spy*/
 	inline void displaySpy() {
 		cout << spy;
 	}
@@ -38,7 +43,7 @@ public:
 
 
 
-	/*  */
+	/* Returns a string */
 	string gatherString();
 
 	/* Collects an integer entered by the user

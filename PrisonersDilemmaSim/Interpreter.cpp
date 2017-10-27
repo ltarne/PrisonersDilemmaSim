@@ -13,16 +13,19 @@ Interpreter::~Interpreter() {
 string Interpreter::getRandomComparisonOperator() {
 	set<string>::const_iterator iterator = COMPARISON_OPERATORS.begin();
 	advance(iterator, rand() % 3);
+
 	return *iterator;
 }
 
 string Interpreter::getRandomVariable() {
 	set<string>::const_iterator iterator = VARIABLES.begin();
 	advance(iterator, rand() % 6+1);
+
 	return *iterator;
 }
 
 int Interpreter::getVariable(string word, Prisoner* prisoner) {
+	//Check if word is an integer
 	if (isInteger(word)) {
 		return stoi(word);
 	}
@@ -51,8 +54,6 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 		
 		vector<string> splitLine((istream_iterator<string>(iss)), istream_iterator<string>());
 
-		//TODO: Check lines are in order
-		//TODO: If not ask user if they want an auto sort
 
 		//Check it is the correct length and has line numbers and a keyword
 		if (splitLine.size() < 2 || 
@@ -63,7 +64,7 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 		}
 
 		if (splitLine[1] == "GOTO") {
-			//Check that lines of 3 long use valid GOTO syntax
+			//Check that lines using GOTO fit the syntax
 			if (splitLine.size() != 3 ||
 				!isInteger(splitLine[2])) {
 				ui->display("Invalid syntax: Lines does not fit GOTO criteria!");
@@ -79,7 +80,7 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 
 		if (splitLine[1] == "IF") {
 
-			//Check that lines of 7 long are in the form of a valid IF
+			//Check that lines using IF fit the syntax
 
 			if (splitLine.size() < 7 ||
 				!isBooleanExpressions(vector<string>(splitLine.begin()+2,splitLine.end()-2)) ||
@@ -93,7 +94,6 @@ Prisoner* Interpreter::interpretFile(string fileName) {
 				referencedLines.push_back(splitLine.back());
 			}
 		}
-
 
 
 		//Seperate the line number
@@ -126,12 +126,15 @@ outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
 	while (mapPosition != strategy.end()) {
 		line = mapPosition->second;
 
+		//Betray keyword
 		if (line[0][0] == 'B') {
 			return BETRAY;
 		}
+		//Silence keyword
 		else if (line[0][0] == 'S') {
 			return SILENCE;
 		}
+		//Random keyword
 		else if (line[0][0] == 'R') {
 
 			if (rand() % 2) {
@@ -141,9 +144,11 @@ outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
 				return SILENCE;
 			}
 		}
+		//IF keyword
 		else if (line[0][0] == 'I') {
 			operationIF(&mapPosition, line, prisoner, strategy);
 		}
+		//GOTO keyword
 		else if (line[0][0] == 'G') {
 			operationGOTO(&mapPosition, line, strategy);
 		}
@@ -154,6 +159,7 @@ outcome Interpreter::interpretStrategy(Prisoner* prisoner) {
 }
 
 bool Interpreter::isInteger(string testString) {
+	//Check that each char is a digit
 	for (int i = 0; i < testString.length(); ++i) {
 		if (!isdigit(testString[i])) {
 			return false;

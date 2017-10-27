@@ -65,23 +65,53 @@ void UserInterface::displayReport(vector<Report<unsigned int>> report) {
 		display(report[x].getName() + to_string(report[x].getFinalResult()));
 	}
 	displayDivider();
-	display("Game Breakdown");
-	for (int x = 0; x < report.size(); ++x) {
-		
-		
-		for (int i = 0; i < report[x].getGameOutcomes().size(); ++i) {
-			display(report[x].getGameOutcomes()[i].first);
-			display("-----------");
-			display("ALLOUTCOMES_W: " + to_string(report[x].getGameOutcomes()[i].second[0]));
-			display("ALLOUTCOMES_X: " + to_string(report[x].getGameOutcomes()[i].second[1]));
-			display("ALLOUTCOMES_Y: " + to_string(report[x].getGameOutcomes()[i].second[2]));
-			display("ALLOUTCOMES_Z: " + to_string(report[x].getGameOutcomes()[i].second[3]));
-			display("ALLOUTCOMES_A: " + to_string(report[x].getGameOutcomes()[i].second[4]));
-			display("ALLOUTCOMES_B: " + to_string(report[x].getGameOutcomes()[i].second[5]));
-			display("ALLOUTCOMES_C: " + to_string(report[x].getGameOutcomes()[i].second[6]));
-			display(" ");
+	display("Would you like to see the detailed results? \ny/n");
+	string detail = "";
+	while (detail != "y" && detail != "n") {
+		detail = gatherString();
+	}
+	if (detail == "y") {
+		display("Game Breakdown");
+		for (int x = 0; x < report.size(); ++x) {
+
+
+			for (int i = 0; i < report[x].getGameOutcomes().size(); ++i) {
+				display(report[x].getGameOutcomes()[i].first);
+				display("-----------");
+				display("ALLOUTCOMES_W: " + to_string(report[x].getGameOutcomes()[i].second[0]));
+				display("ALLOUTCOMES_X: " + to_string(report[x].getGameOutcomes()[i].second[1]));
+				display("ALLOUTCOMES_Y: " + to_string(report[x].getGameOutcomes()[i].second[2]));
+				display("ALLOUTCOMES_Z: " + to_string(report[x].getGameOutcomes()[i].second[3]));
+				display("ALLOUTCOMES_A: " + to_string(report[x].getGameOutcomes()[i].second[4]));
+				display("ALLOUTCOMES_B: " + to_string(report[x].getGameOutcomes()[i].second[5]));
+				display("ALLOUTCOMES_C: " + to_string(report[x].getGameOutcomes()[i].second[6]));
+				if (report[x].getSpyVariables().size() != 0) {
+					display("Total Spies: " + to_string(report[x].getSpyVariables()[i].second.first));
+					display("Total Swaps: " + to_string(report[x].getSpyVariables()[i].second.second));
+				}
+
+				display(" ");
+			}
 		}
 	}
+
+	display("Would you like to print to file? y/n");
+	detail = "";
+	while (detail != "y" && detail != "n") {
+		detail = gatherString();
+	}
+	if (detail == "y") {
+		display("Enter full name for file: ");
+		string fileName = gatherString();
+
+		for (int i = 0; i < report.size(); ++i) {
+			report[i].toFile(fileName);
+		}
+	}
+
+	
+
+	
 }
 
 

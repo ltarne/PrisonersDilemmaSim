@@ -34,6 +34,7 @@ Tournament::~Tournament() {
 void Tournament::gatherTournamentData(int * n, string * baseName, int * iterations) {
 	ui->display("Enter the number of files to be tested: ");
 	*n = ui->gatherInteger();
+
 	ui->display("Enter base name for files: ");
 	*baseName = ui->gatherString();
 
@@ -55,6 +56,7 @@ void Tournament::loadPrisoners(vector<string> filePaths) {
 	lock.prisoners = &prisoners;
 	//Hack
 	Interpreter* tempInt = interpreter;
+	//Create a thread for each file to be loaded
 	for (int i = 0; i < filePaths.size(); ++i) {
 		threads.push_back(thread([&lock, filePaths, i, tempInt] {
 			Prisoner* temp = tempInt->interpretFile(filePaths[i]);
@@ -68,16 +70,6 @@ void Tournament::loadPrisoners(vector<string> filePaths) {
 			}
 		}));
 
-
-		/*
-		Prisoner* temp = interpreter->interpretFile(filePaths[i]);
-		if (temp) {
-			prisoners.push_back(temp);
-		}
-		else {
-			return;
-		}
-		*/
 	}
 	for (int j = 0; j < threads.size(); ++j) {
 		threads[j].join();
@@ -89,13 +81,14 @@ void Tournament::loadGangs() {
 	if (prisoners.size() == 0) {
 		return;
 	}
-
-	ui->display("What percentage of iterations should have a spy? y/n");
+	ui->displaySpy();
+	ui->display("What percentage of iterations should have a spy?");
 	float spyPercentage = ui->gatherInteger();
 
 	vector<Prisoner*> temp = prisoners;
 
 	for (int i = 0; i < prisoners.size() / 2; ++i) {
+		//Randomise gangs
 		random_shuffle(temp.begin(), temp.end());
 		Gang* tempA = new Gang(vector<Prisoner*>(temp.begin(), temp.end() - temp.size() / 2), spyPercentage);
 		Gang* tempB = new Gang(vector<Prisoner*>(temp.end() - temp.size() / 2, temp.end()), spyPercentage);
@@ -147,7 +140,7 @@ void Tournament::executeGame(Prisoner* x, Prisoner* y, int iterations) {
 		outcome resultX = interpreter->interpretStrategy(x);
 		outcome resultY = interpreter->interpretStrategy(y);
 
-		//TODO: Handle NONE case
+		
 		if (resultX == resultY) {
 			if (resultX == BETRAY) {
 				x->incrementALLOUTCOMES_Z();
@@ -192,36 +185,43 @@ void Tournament::executeGame(Prisoner* x, Prisoner* y, int iterations) {
 		x->incrementITERATIONS();
 		y->incrementITERATIONS();
 	}
-	
-	/*gameResults.insert(pair<string,pair<int,int>>(x->getFileName() + " vs " + y->getFileName(), pair<int,int>(x->getMYSCORE(), y->getMYSCORE())));
-	results.find(x->getFileName())->second += x->getMYSCORE();
-	results.find(y->getFileName())->second += y->getMYSCORE();*/
 
+	//Load data into reports
 	reports.find(x->getFileName())->second.insertResult(x->getMYSCORE());
 	reports.find(y->getFileName())->second.insertResult(y->getMYSCORE());
 	reports.find(x->getFileName())->second.insertGameOutcomes(y->getFileName(), x->getOutcomes());
 	reports.find(y->getFileName())->second.insertGameOutcomes(x->getFileName(), y->getOutcomes());
 	
+	//Reset game
 	x->resetVariables();
 	y->resetVariables();
 }
 
 void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
+	unsigned int xTotalSpies = 0;
+	unsigned int yTotalSpies = 0;
+	unsigned int xTotalSwitched = 0;
+	unsigned int yTotalSwitched = 0;
 	for (int j = 0; j < iterations; ++j) {
 		vector<outcome> xOutcomes;
 		vector<outcome> yOutcomes;
+
+		//Check is using spys
 		bool xSpy = xGang->isSpyInPlay();
 
 		if (xSpy) {
 			xGang->chooseSpyAndLeader();
+			xTotalSpies++;
 		}
 
 		bool ySpy = yGang->isSpyInPlay();
 		if (ySpy) {
 			yGang->chooseSpyAndLeader();
+			yTotalSpies++;
 		}
 		
 		outcome yOverall;
+		//Execute strategy
 		for (int i = 0; i < xGang->getStrategies().size(); ++i) {
 			if (!(xSpy && xGang->getNextStrategy() == xGang->getSpy())) {
 				xOutcomes.push_back(interpreter->interpretStrategy(xGang));
@@ -232,13 +232,13 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 			
 		}
 
+		//Handle spy results
 		bool xSpyFound;
 		bool ySpyFound;
 
 		int xSilent = count(xOutcomes.begin(), xOutcomes.end(), SILENCE);
 		int xBetray = count(xOutcomes.begin(), xOutcomes.end(), BETRAY);
 
-		//TODO: Turn into function
 		if (xSpy) {
 			xSpyFound = xGang->findSpy();
 			if (xSilent < xBetray) {
@@ -286,7 +286,7 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 		
 		
 
-
+		//Handle final results
 		if ((xSpy && ySpy) && (xSpyFound && ySpyFound)) {
 			xGang->incrementMYSCORE(6);
 			yGang->incrementMYSCORE(6);
@@ -294,6 +294,7 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 		else if (xSpy && xSpyFound) {
 			if (xGang->didLeaderSwap()) {
 				xGang->incrementMYSCORE(2);
+				xTotalSwitched++;
 			}
 			else {
 				xGang->incrementMYSCORE(0);
@@ -301,6 +302,7 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 		}
 		else if (ySpy && ySpyFound) {
 			if (yGang->didLeaderSwap()) {
+				yTotalSwitched++;
 				yGang->incrementMYSCORE(2);
 			}
 			else {
@@ -341,14 +343,15 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 		
 	}
 
-	
+	//Load results into reports
 	reports.find(xGang->getFileName())->second.insertResult(xGang->getMYSCORE());
 	reports.find(yGang->getFileName())->second.insertResult(yGang->getMYSCORE());
 	reports.find(xGang->getFileName())->second.insertGameOutcomes(yGang->getFileName(), xGang->getOutcomes());
 	reports.find(yGang->getFileName())->second.insertGameOutcomes(xGang->getFileName(), yGang->getOutcomes());
-	/*reports.find(xGang->getFileName())->second.insertSpyResult();
-	reports.find(yGang->getFileName())->second.insertSpyResult();*/
+	reports.find(xGang->getFileName())->second.insertSpyResult(yGang->getFileName(), pair<unsigned int,unsigned int>(xTotalSpies, xTotalSwitched));
+	reports.find(yGang->getFileName())->second.insertSpyResult(xGang->getFileName(), pair<unsigned int, unsigned int>(yTotalSpies, yTotalSwitched));
 
+	//Reset game
 	xGang->resetVariables();
 	yGang->resetVariables();
 	
@@ -377,6 +380,7 @@ void Tournament::executeTournament() {
 	string baseName;
 	int n = 0;
 	int iterations = 0;
+	//Loading
 
 	gatherTournamentData(&n, &baseName, &iterations);
 
@@ -389,19 +393,12 @@ void Tournament::executeTournament() {
 		return;
 	}
 	ui->display("Tournament loaded...");
+
+	//Execution
 	compareAllPrisoners(iterations);
 
-	ui->display("Would you like to see the detailed results? y/n");
-	string detail = "";
-	while (detail != "y" && detail != "n") {
-		detail = ui->gatherString();
-	}
-	if (detail == "y") {
-		displayResults(true);
-	}
-	else {
-		displayResults(false);
-	}
+	//Cleanup
+	displayResults();
 	
 
 	resetTournament();
@@ -413,49 +410,29 @@ void Tournament::executeGangTournament() {
 	int iterations = 0;
 	float spyPercentage = 0.0f;
 
+	//Loading
 	gatherTournamentData(&n, &baseName, &iterations);
 	
 	loadTournament(baseName, n);
 
 	loadGangs();
 	ui->display("Tournament loaded...");
+
+	//Execution
 	compareAllGangs(iterations);
 
-	ui->display("Would you like to see the detailed results? y/n");
-	string detail = "";
-	while (detail != "y" && detail != "n") {
-		detail = ui->gatherString();
-	}
-	if (detail == "y") {
-		displayResults(true);
-	}
-	else {
-		displayResults(false);
-	}
+	//Clean up
+	displayResults();
 
 	resetTournament();
 }
 
-void Tournament::displayResults(bool detail) {
+void Tournament::displayResults() {
 	vector<Report<unsigned int>> temp;
 	for (map<string, Report<unsigned int>>::iterator i = reports.begin(); i != reports.end(); ++i) {
 		temp.push_back(i->second);
 	}
 	ui->displayReport(temp);
-	/*if (detail) {
-		ui->displayDivider();
-		ui->display("Displaying Game by game detail");
-
-		for (map<string, pair<int, int>>::iterator i = gameResults.begin(); i != gameResults.end(); ++i) {
-			ui->display(i->first + ": " + to_string(i->second.first) + " vs " + to_string(i->second.second));
-		}
-	}
-	ui->displayDivider();
-	ui->display("Displaying final results");
-	for (map<string, int>::iterator i = results.begin(); i != results.end(); ++i) {
-		ui->display(i->first + ": " + to_string(i->second));
-		
-	}*/
 }
 
 void Tournament::resetTournament() {
@@ -467,4 +444,5 @@ void Tournament::resetTournament() {
 		delete gangs.back();
 		gangs.pop_back();
 	}
+	reports.clear();
 }

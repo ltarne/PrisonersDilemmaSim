@@ -1,17 +1,47 @@
-﻿  Tournament.cpp
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\gang.h(37): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(46): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(58): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(82): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(94): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(98): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(225): warning C4018: '<': signed/unsigned mismatch
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(224): warning C4101: 'yOverall': unreferenced local variable
+﻿  UserInterface.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(25): warning C4018: '<=': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(55): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(58): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(64): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(75): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(78): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(107): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\report.h(30): warning C4018: '<': signed/unsigned mismatch
+  c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\report.h(27): note: while compiling class template member function 'std::ostream &operator <<(std::ostream &,Report<unsigned int> &)'
+  c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(56): note: see reference to class template instantiation 'Report<unsigned int>' being compiled
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\report.h(33): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\report.h(38): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  main.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\gang.h(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\main.cpp(19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Tournament.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\gang.h(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(47): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(60): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(74): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(86): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(90): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(223): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(222): warning C4101: 'yOverall': unreferenced local variable
 c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(359): warning C4018: '<': signed/unsigned mismatch
 c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(360): warning C4018: '<': signed/unsigned mismatch
 c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(368): warning C4018: '<': signed/unsigned mismatch
 c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(369): warning C4018: '<': signed/unsigned mismatch
 c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(384): warning C4018: '<': signed/unsigned mismatch
 c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\tournament.cpp(387): warning C4018: '<': signed/unsigned mismatch
+  StrategyGenerator.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\gang.h(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\strategygenerator.cpp(45): warning C4018: '<': signed/unsigned mismatch
+  Report.cpp
+  Interpreter.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\gang.h(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(107): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(163): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(188): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(242): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\interpreter.cpp(216): warning C4101: 'result': unreferenced local variable
+  Generating Code...
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)

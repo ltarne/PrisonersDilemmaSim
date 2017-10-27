@@ -1,4 +1,7 @@
-
+/* Main file
+* Author: Luke Burton 140274882
+* Date: 27/10/2017
+*/
 #include "StrategyGenerator.h"
 #include "Tournament.h"
 
@@ -16,7 +19,7 @@ int main() {
 	srand(time(NULL));
 
 	int command = -1;
-
+	//Command -1 is no command
 	while (command != 0) {
 		ui.mainMenu();
 		command = ui.gatherInteger();

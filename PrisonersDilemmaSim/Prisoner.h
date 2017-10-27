@@ -1,3 +1,7 @@
+/* A store for prisoner variables and their strategy
+* Author: Luke Burton 140274882
+* Date: 27/10/2017
+*/
 #pragma once
 #include <map>
 #include <vector>
@@ -85,6 +89,7 @@ public:
 		return LASTOUTCOME;
 	}
 
+	/*Return a vector of outcomes*/
 	vector<unsigned int> getOutcomes() {
 		vector<unsigned int> temp = { ALLOUTCOMES_W, ALLOUTCOMES_X, ALLOUTCOMES_Y, ALLOUTCOMES_Z, ALLOUTCOMES_A, ALLOUTCOMES_B, ALLOUTCOMES_C };
 		return temp;

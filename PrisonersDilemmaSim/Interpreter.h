@@ -1,3 +1,7 @@
+/* Interprets files into a readable format and executes strategies
+* Author: Luke Burton 140274882
+* Date: 27/10/2017
+*/
 #pragma once
 #include <fstream>
 #include <istream>
@@ -42,10 +46,16 @@ public:
 		return ARITHMETIC_OPERATORS;
 	}
 
+	/*Return a random compariosn operator*/
 	string getRandomComparisonOperator();
 
+	/*Return a random variable*/
 	string getRandomVariable();
 
+	/*Return address of the variable referenced
+	* word: Word to be checked 
+	* prisoner: Variable source
+	*/
 	int getVariable(string word, Prisoner* prisoner);
 
 	/* Generate a strategy map from a file and create a prisoner.
@@ -63,14 +73,19 @@ public:
 	*/
 	bool isInteger(string testString);
 
+	/*Return if boolean expression i.e. x < y*/
 	bool isBooleanExpressions(vector<string> expression);
 
+	/*Return answer to boolean expression*/
 	bool evaluateBooleanExpression(vector<string> expression, Prisoner* prisoner);
 
+	/*Execute IF statement*/
 	void operationIF(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, Prisoner* prisoner, const map<string, vector<string>> &strategy);
 
+	/*Execute GOTO statement*/
 	void operationGOTO(map<string, vector<string>>::const_iterator* programPosition, vector<string> line, const map<string, vector<string>> &strategy);
 
+	/*Generate filename form a base name and range*/
 	vector<string> generateFileVector(string baseName, int n);
 
 protected:
