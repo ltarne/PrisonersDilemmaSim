@@ -25,16 +25,31 @@ const map<string, vector<string>>& Gang::getStrategy() {
 
 void Gang::chooseSpyAndLeader() {
 	leader = getRandomStrategy();
-	spy = getRandomStrategy();
+	spy = leader;
+	while (spy == leader) {
+		spy = getRandomStrategy();
+	}
 }
 
+
 bool Gang::findSpy() {
-	/*vector<map<string, vector<string>>>::iterator possibleSpy;
+	vector<map<string, vector<string>>>::iterator possibleSpy = leader;
 
-
-
-	return possibleSpy == spy;*/
-	return false;
+	while (possibleSpy == leader) {
+		possibleSpy = getRandomStrategy();
+	}
+	vector<map<string, vector<string>>>::iterator revealedNonSpy = possibleSpy;
+	while (revealedNonSpy == leader || revealedNonSpy == possibleSpy || revealedNonSpy == spy) {
+		revealedNonSpy = getRandomStrategy();
+	}
+	vector<map<string, vector<string>>>::iterator finalChoice = possibleSpy;
+	if (rand() % 2) {
+		leaderSwap = true;
+		while (finalChoice == leader || finalChoice == possibleSpy || finalChoice == possibleSpy) {
+			finalChoice = getRandomStrategy();
+		}
+	}
+	return finalChoice == spy;
 }
 
 

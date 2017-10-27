@@ -171,13 +171,11 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 		bool xSpy = xGang->isSpyInPlay();
 
 		if (xSpy) {
-			ui->displaySpy();
 			xGang->chooseSpyAndLeader();
 		}
 
 		bool ySpy = yGang->isSpyInPlay();
 		if (ySpy) {
-			ui->displaySpy();
 			yGang->chooseSpyAndLeader();
 		}
 		
@@ -192,11 +190,15 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 			
 		}
 
+		bool xSpyFound;
+		bool ySpyFound;
+
 		int xSilent = count(xOutcomes.begin(), xOutcomes.end(), SILENCE);
 		int xBetray = count(xOutcomes.begin(), xOutcomes.end(), BETRAY);
 
 		//TODO: Turn into function
 		if (xSpy) {
+			xSpyFound = xGang->findSpy();
 			if (xSilent < xBetray) {
 				xSilent++;
 			}
@@ -219,7 +221,10 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 		int ySilent = count(yOutcomes.begin(), yOutcomes.end(), SILENCE);
 		int yBetray = count(yOutcomes.begin(), yOutcomes.end(), BETRAY);
 
+		
+
 		if (ySpy) {
+			ySpyFound = yGang->findSpy();
 			if (ySilent < yBetray) {
 				ySilent++;
 			}
@@ -236,15 +241,15 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 			}
 		}
 
-		bool xSpyFound = xGang->findSpy();
-		bool ySpyFound = yGang->findSpy();
+		
+		
 
-		if (xSpyFound && ySpyFound) {
+
+		if ((xSpy && ySpy) && (xSpyFound && ySpyFound)) {
 			xGang->incrementMYSCORE(6);
 			yGang->incrementMYSCORE(6);
 		}
-		else if (xSpyFound) {
-			ui->displaySpy();
+		else if (xSpy && xSpyFound) {
 			if (xGang->didLeaderSwap()) {
 				xGang->incrementMYSCORE(2);
 			}
@@ -252,8 +257,7 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 				xGang->incrementMYSCORE(0);
 			}
 		}
-		else if (ySpyFound) {
-			ui->displaySpy();
+		else if (ySpy && ySpyFound) {
 			if (yGang->didLeaderSwap()) {
 				yGang->incrementMYSCORE(2);
 			}
