@@ -1,4 +1,9 @@
-﻿  Gang.cpp
-c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\gang.h(37): warning C4018: '<': signed/unsigned mismatch
+﻿  UserInterface.cpp
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(25): warning C4018: '<=': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(55): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(58): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(64): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(69): warning C4018: '<': signed/unsigned mismatch
+c:\users\b4027488\github\prisonersdilemmasim\prisonersdilemmasim\userinterface.cpp(72): warning C4018: '<': signed/unsigned mismatch
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.exe
   PrisonersDilemmaSim.vcxproj -> C:\Users\B4027488\GitHub\PrisonersDilemmaSim\Debug\PrisonersDilemmaSim.pdb (Partial PDB)

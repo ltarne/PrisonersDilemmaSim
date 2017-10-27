@@ -85,6 +85,11 @@ public:
 		return LASTOUTCOME;
 	}
 
+	vector<unsigned int> getOutcomes() {
+		vector<unsigned int> temp = { ALLOUTCOMES_W, ALLOUTCOMES_X, ALLOUTCOMES_Y, ALLOUTCOMES_Z, ALLOUTCOMES_A, ALLOUTCOMES_B, ALLOUTCOMES_C };
+		return temp;
+	}
+
 	unsigned int getVariable(const string word);
 
 	void resetVariables();

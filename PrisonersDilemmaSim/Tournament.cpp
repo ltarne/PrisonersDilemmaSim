@@ -41,12 +41,20 @@ void Tournament::gatherTournamentData(int * n, string * baseName, int * iteratio
 	*iterations = ui->gatherInteger();
 }
 
+vector<string> Tournament::prisonersToFileNames(vector<Prisoner*> prisonerList) {
+	vector<string> fileNames;
+	for (int i = 0; i < prisonerList.size(); ++i) {
+		fileNames.push_back(prisonerList[i]->getFileName());
+	}
+	return fileNames;
+}
+
 void Tournament::loadPrisoners(vector<string> filePaths) {
 	for (int i = 0; i < filePaths.size(); ++i) {
 		Prisoner* temp = interpreter->interpretFile(filePaths[i]);
 		if (temp) {
 			prisoners.push_back(temp);
-			results.insert(pair<string, int> (filePaths[i], 0));
+			
 		}
 		else {
 			return;
@@ -65,8 +73,12 @@ void Tournament::loadGangs() {
 
 	for (int i = 0; i < prisoners.size() / 2; ++i) {
 		random_shuffle(temp.begin(), temp.end());
-		gangs.push_back(new Gang(vector<Prisoner*>(temp.begin(), temp.end() - temp.size()/2), 10.0f));
-		gangs.push_back(new Gang(vector<Prisoner*>(temp.end() - temp.size() / 2, temp.end()), 10.0f));
+		Gang* tempA = new Gang(vector<Prisoner*>(temp.begin(), temp.end() - temp.size() / 2), 10.0f);
+		Gang* tempB = new Gang(vector<Prisoner*>(temp.end() - temp.size() / 2, temp.end()), 10.0f);
+		reports.insert(pair<string, Report<unsigned int>>(tempA->getFileName(), Report<unsigned int>(("Gang " + to_string(i*2)), prisonersToFileNames(vector<Prisoner*>(temp.begin(), temp.end() - temp.size() / 2)))));
+		gangs.push_back(tempA);
+		reports.insert(pair<string, Report<unsigned int>>(tempB->getFileName(), Report<unsigned int>("Gang " + to_string((i * 2) + 1), prisonersToFileNames(vector<Prisoner*>(temp.begin(), temp.end() - temp.size() / 2)))));
+		gangs.push_back(tempB);
 	}
 
 }
@@ -156,9 +168,14 @@ void Tournament::executeGame(Prisoner* x, Prisoner* y, int iterations) {
 		y->incrementITERATIONS();
 	}
 	
-	gameResults.insert(pair<string,pair<int,int>>(x->getFileName() + " vs " + y->getFileName(), pair<int,int>(x->getMYSCORE(), y->getMYSCORE())));
+	/*gameResults.insert(pair<string,pair<int,int>>(x->getFileName() + " vs " + y->getFileName(), pair<int,int>(x->getMYSCORE(), y->getMYSCORE())));
 	results.find(x->getFileName())->second += x->getMYSCORE();
-	results.find(y->getFileName())->second += y->getMYSCORE();
+	results.find(y->getFileName())->second += y->getMYSCORE();*/
+
+	reports.find(x->getFileName())->second.insertResult(x->getMYSCORE());
+	reports.find(y->getFileName())->second.insertResult(y->getMYSCORE());
+	reports.find(x->getFileName())->second.insertGameOutcomes(y->getFileName(), x->getOutcomes());
+	reports.find(y->getFileName())->second.insertGameOutcomes(x->getFileName(), y->getOutcomes());
 	
 	x->resetVariables();
 	y->resetVariables();
@@ -299,9 +316,13 @@ void Tournament::executeGangGame(Gang* xGang, Gang* yGang, int iterations) {
 		
 	}
 
-	gameResults.insert(pair<string, pair<int, int>>(xGang->getFileName() + " vs " + yGang->getFileName(), pair<int, int>(xGang->getMYSCORE(), yGang->getMYSCORE())));
-	//results.find(xGang->getFileName())->second += xGang->getMYSCORE();
-	//results.find(yGang->getFileName())->second += yGang->getMYSCORE();
+	
+	reports.find(xGang->getFileName())->second.insertResult(xGang->getMYSCORE());
+	reports.find(yGang->getFileName())->second.insertResult(yGang->getMYSCORE());
+	reports.find(xGang->getFileName())->second.insertGameOutcomes(yGang->getFileName(), xGang->getOutcomes());
+	reports.find(yGang->getFileName())->second.insertGameOutcomes(xGang->getFileName(), yGang->getOutcomes());
+	/*reports.find(xGang->getFileName())->second.insertSpyResult();
+	reports.find(yGang->getFileName())->second.insertSpyResult();*/
 
 	xGang->resetVariables();
 	yGang->resetVariables();
@@ -335,6 +356,9 @@ void Tournament::executeTournament() {
 	gatherTournamentData(&n, &baseName, &iterations);
 
 	loadTournament(baseName, n);
+	for (int i = 0; i < prisoners.size(); ++i) {
+		reports.insert(pair<string, Report<unsigned int>>(prisoners[i]->getFileName(), Report<unsigned int>(prisoners[i]->getFileName())));
+	}
 	if (prisoners.size() < n) {
 		ui->display("Tournament load error!");
 		return;
@@ -387,7 +411,12 @@ void Tournament::executeGangTournament() {
 }
 
 void Tournament::displayResults(bool detail) {
-	if (detail) {
+	vector<Report<unsigned int>> temp;
+	for (map<string, Report<unsigned int>>::iterator i = reports.begin(); i != reports.end(); ++i) {
+		temp.push_back(i->second);
+	}
+	ui->displayReport(temp);
+	/*if (detail) {
 		ui->displayDivider();
 		ui->display("Displaying Game by game detail");
 
@@ -400,7 +429,7 @@ void Tournament::displayResults(bool detail) {
 	for (map<string, int>::iterator i = results.begin(); i != results.end(); ++i) {
 		ui->display(i->first + ": " + to_string(i->second));
 		
-	}
+	}*/
 }
 
 void Tournament::resetTournament() {
@@ -412,6 +441,4 @@ void Tournament::resetTournament() {
 		delete gangs.back();
 		gangs.pop_back();
 	}
-	results.clear();
-	gameResults.clear();
 }

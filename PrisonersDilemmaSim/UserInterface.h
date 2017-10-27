@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+#include "Report.h"
+
 using namespace std;
 
 struct menuItem {
@@ -32,7 +34,8 @@ public:
 		cout << spy;
 	}
 
-	void displayReport();
+	void displayReport(vector<Report<unsigned int>> report);
+
 
 
 	/*  */

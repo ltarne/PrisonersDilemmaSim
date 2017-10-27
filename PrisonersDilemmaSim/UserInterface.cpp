@@ -48,6 +48,44 @@ void UserInterface::mainMenu() {
 	cout << divider;
 }
 
+void UserInterface::displayReport(vector<Report<unsigned int>> report) {
+	//Key
+	displayDivider();
+	display("Key");
+	for (int i = 0; i < report.size(); ++i) {
+		display(report[i].getName());
+		display("-------------------");
+		for (int j = 0; j < report[i].getMemberNames().size(); ++j) {
+			display(report[i].getMemberNames()[j]);
+		}
+	}
+	displayDivider();
+	display("Overall Score");
+	for (int x = 0; x < report.size(); ++x) {
+		display(report[x].getName() + to_string(report[x].getFinalResult()));
+	}
+	displayDivider();
+	display("Game Breakdown");
+	for (int x = 0; x < report.size(); ++x) {
+		
+		
+		for (int i = 0; i < report[x].getGameOutcomes().size(); ++i) {
+			display(report[x].getGameOutcomes()[i].first);
+			display("-----------");
+			display("ALLOUTCOMES_W: " + to_string(report[x].getGameOutcomes()[i].second[0]));
+			display("ALLOUTCOMES_X: " + to_string(report[x].getGameOutcomes()[i].second[1]));
+			display("ALLOUTCOMES_Y: " + to_string(report[x].getGameOutcomes()[i].second[2]));
+			display("ALLOUTCOMES_Z: " + to_string(report[x].getGameOutcomes()[i].second[3]));
+			display("ALLOUTCOMES_A: " + to_string(report[x].getGameOutcomes()[i].second[4]));
+			display("ALLOUTCOMES_B: " + to_string(report[x].getGameOutcomes()[i].second[5]));
+			display("ALLOUTCOMES_C: " + to_string(report[x].getGameOutcomes()[i].second[6]));
+			display(" ");
+		}
+	}
+}
+
+
+
 string UserInterface::gatherString() {
 
 

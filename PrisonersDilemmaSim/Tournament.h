@@ -1,6 +1,8 @@
 #pragma once
 #include <algorithm>
+#include <mutex>
 #include "Interpreter.h"
+#include "Report.h"
 
 class Tournament
 {
@@ -15,6 +17,8 @@ public:
 	}
 
 	void gatherTournamentData(int* n, string* baseName, int* iterations);
+
+	vector<string> prisonersToFileNames(vector<Prisoner*> prisonerList);
 
 	void loadPrisoners(vector<string> filePaths);
 
@@ -45,9 +49,8 @@ protected:
 
 	vector<Prisoner*> prisoners;
 	vector<Gang*> gangs;
-	
-	map<string, int> results;
-	map<string, pair<int, int>> gameResults;
+
+	map<string, Report<unsigned int>> reports;
 
 
 };
